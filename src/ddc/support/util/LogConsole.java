@@ -24,7 +24,7 @@ public class LogConsole implements LogListener {
 	}
 
 	@Override
-	public void warning(Object message) {
+	public void warn(Object message) {
 		out("WARN ", message);		
 	}
 

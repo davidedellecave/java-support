@@ -1,10 +1,12 @@
 package ddc.support.files.scan;
 
 import java.io.File;
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import ddc.support.files.scan.ScanFolder.ScanResult;
@@ -72,7 +74,28 @@ public class ScanFolderUtil {
 		});
 		return list;
 	}
-
+	
+	
+	public static List<Path> getLastModifiedSorted(Path folder) throws Exception {
+		List<Path> list = ScanFolderUtil.getFiles(folder);
+		Collections.sort(list, new Comparator<Path>() {
+			@Override
+			public int compare(Path path1, Path path2) {				
+				try {
+					if (path1.toString().equals(path2.toString())) return 0;
+					long m1 = Files.getLastModifiedTime(path1).toMillis();
+					long m2 = Files.getLastModifiedTime(path2).toMillis();					
+					if (m1==m2) return 0;
+					return m1 < m2 ? 1 : -1;
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				return 0;
+			}
+		});
+		return list;
+	}
+	
 	public static List<Path> getFolders(Path folder) throws Exception {
 		if (Files.exists(folder)) {
 			return Collections.emptyList();

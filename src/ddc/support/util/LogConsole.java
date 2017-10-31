@@ -39,14 +39,14 @@ public class LogConsole implements LogListener {
 	}
 	
 	private void out(String level, Object message) {
-		System.out.println(dateISOFormatter.format(new Date()) + " (" + chron.getElapsed() + ")" + " - " + level + classname + " - " + message);
+		System.out.println(dateISOFormatter.format(new Date()) + " (" + chron.getElapsed() + " ms)" + " - " + level + classname + " - " + message);
 		chron.start();
 	}
 
 	private void err(String level, Object message) {		
-		System.out.println(dateISOFormatter.format(new Date()) + " (" + chron.getElapsed() + ")" + " - " + level + classname + " - " + message);
+		System.out.println(dateISOFormatter.format(new Date()) + " (" + chron.getElapsed() + " ms)" + " - " + level + classname + " - " + message);
 		chron.start();
 	}
 	
-	private static SimpleDateFormat dateISOFormatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
+	private static SimpleDateFormat dateISOFormatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SS");
 }

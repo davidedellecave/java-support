@@ -1,5 +1,7 @@
 package ddc.support.util;
 
+import org.apache.commons.io.FileUtils;
+
 public class Statistics {
 	public Chronometer chron = new Chronometer();
 	public String itemsSource = null;
@@ -18,7 +20,7 @@ public class Statistics {
 		if (bytesProcessed==0) return "";
 		long ratio = (long)bytesProcessed / chron.getElapsed()*1000;
 		if (ratio==0) return "";
-		return ratio + " bytes/sec (" +  FileUtils.byteCountToDisplaySize(ratio) + "/sec)";
+		return ratio + " bytes/sec (" +  FileUtil.byteCountToDisplaySize(ratio) + "/sec)";
 	}
 
 	public String getItemsOverSecs() {

@@ -48,7 +48,7 @@ public class SqlUtils {
 		ResultSet rs = null;
 		try {
 			Chronometer chron = new Chronometer();
-			statement = connection.createStatement(RS_TYPE, RS_CONCURRENCY);
+			statement = connection.createStatement(ResultSet.TYPE_FORWARD_ONLY, ResultSet.FETCH_FORWARD);
 			statement.setFetchSize(FETCH_SIZE);
 			rs = statement.executeQuery(sql);
 			// ResultSetMetaData meta = rs.getMetaData();

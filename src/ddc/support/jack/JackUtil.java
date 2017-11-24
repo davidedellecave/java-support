@@ -10,7 +10,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.TypeFactory;
 
-public class JackUtil<T> {
+public class JackUtil {
 
 	public static String prettify(JsonNode node) throws JsonGenerationException, JsonMappingException, IOException {
 		ObjectMapper mapper = new ObjectMapper();
@@ -36,9 +36,9 @@ public class JackUtil<T> {
 		return parse("{}");
 	}
 	
-	public List<T> parseList(String json, Class<T> elementClass) throws JsonParseException, JsonMappingException, IOException {
+	public List<? extends Object> parseList(String json, Class<? extends Object> elementClass) throws JsonParseException, JsonMappingException, IOException {
 		ObjectMapper mapper = new ObjectMapper();
-		List<T> list = mapper.readValue(json, TypeFactory.defaultInstance().constructCollectionType(List.class, elementClass));
+		List<? extends Object> list = mapper.readValue(json, TypeFactory.defaultInstance().constructCollectionType(List.class, elementClass));
 		return list;
 	}
 }

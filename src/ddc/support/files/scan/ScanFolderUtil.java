@@ -58,6 +58,16 @@ public class ScanFolderUtil {
 		});
 		return list;
 	}
+	
+	public static void handleFiles(Path folder, ScanFolderHandlerFile handler)  throws Exception {
+		ScanFolder s = new ScanFolder();
+		s.deepFirstScan(folder.toFile(), true, new BaseScanFolderHandler() {
+			@Override
+			public ScanResult handleFile(File file, ScanFolderContext ctx) throws Exception {
+				return handler.handleFile(file, ctx);
+			}
+		});
+	}
 
 	public static List<Path> getFiles(Path folder) throws Exception {
 		if (!folder.toFile().isDirectory()) {

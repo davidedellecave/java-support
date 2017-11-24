@@ -4,9 +4,8 @@ import java.io.File;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 
-import org.apache.commons.io.FileUtils;
-
 import ddc.support.util.Chronometer;
+import ddc.support.util.FileUtil;
 import ddc.support.util.LogListener;
 
 public class ScanFolder {
@@ -117,13 +116,13 @@ public class ScanFolder {
 		// logger.info("End Scan");
 		ScanFolderStats stats = ctx.getStats();
 
-		String sizeProcessed = FileUtils.byteCountToDisplaySize(stats.getBytesProcessed());
+		String sizeProcessed = FileUtil.byteCountToDisplaySize(stats.getBytesProcessed());
 		stats.setSizeProcessed(sizeProcessed);
 		float throughput = 0;
 		String throughputSize = "";
 		if ((stats.getChron().getElapsed() / 1000) > 0) {
 			throughput = stats.getBytesProcessed() / (stats.getChron().getElapsed() / 1000);
-			throughputSize = FileUtils.byteCountToDisplaySize((long) throughput) + "/sec";
+			throughputSize = FileUtil.byteCountToDisplaySize((long) throughput) + "/sec";
 			stats.setThroughput(throughput);
 			stats.setThroughputSize(throughputSize);
 		}

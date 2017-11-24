@@ -14,8 +14,8 @@ import java.util.GregorianCalendar;
 /**
  * @author davidedc, 30/ott/2010
  */
-public class DateUtil extends org.apache.commons.lang3.time.DateUtils {
-	
+public class DateUtil {
+
 	@Deprecated
 	public enum Month {
 		January(0), February(1), March(2), April(3), May(4), June(5), July(6), August(7), September(8), October(9), November(10), December(11);
@@ -54,7 +54,7 @@ public class DateUtil extends org.apache.commons.lang3.time.DateUtils {
 	public static Instant parseToInstant(String formattedDate, String pattern) throws ParseException {
 		return parseToDate(formattedDate, pattern).toInstant();
 	}
-	
+
 	public static Instant parseToInstant(String formattedDate, String[] pattern) throws ParseException {
 		ParseException exception = null;
 		for (String p : pattern) {
@@ -65,9 +65,9 @@ public class DateUtil extends org.apache.commons.lang3.time.DateUtils {
 			}
 		}
 		throw exception;
-		
+
 	}
-	
+
 	public static Date parseToDate(String formattedDate, String[] pattern) throws ParseException {
 		ParseException exception = null;
 		for (String p : pattern) {
@@ -78,7 +78,7 @@ public class DateUtil extends org.apache.commons.lang3.time.DateUtils {
 			}
 		}
 		throw exception;
-		
+
 	}
 
 	public static Date parseToDate(String formattedDate, String pattern) throws ParseException {
@@ -99,29 +99,31 @@ public class DateUtil extends org.apache.commons.lang3.time.DateUtils {
 		throw exception;
 	}
 
-//	public static LocalDate parseToLocalDate(String date, String[] fromPattern) throws DateTimeParseException {
-//		DateTimeParseException exception = null;
-//		for (String pattern : fromPattern) {
-//			try {
-//				return parseToLocalDate(date, pattern);
-//			} catch (DateTimeParseException e) {
-//				exception = e;
-//			}
-//		}
-//		throw exception;
-//	}
+	// public static LocalDate parseToLocalDate(String date, String[] fromPattern)
+	// throws DateTimeParseException {
+	// DateTimeParseException exception = null;
+	// for (String pattern : fromPattern) {
+	// try {
+	// return parseToLocalDate(date, pattern);
+	// } catch (DateTimeParseException e) {
+	// exception = e;
+	// }
+	// }
+	// throw exception;
+	// }
 
-//	public static ZonedDateTime parseToZonedDateTime(String date, String[] fromPattern, Locale locale) throws DateTimeParseException {
-//		DateTimeParseException exception = null;
-//		for (String pattern : fromPattern) {
-//			try {
-//				return parseToZonedDateTime(date, pattern, locale);
-//			} catch (DateTimeParseException e) {
-//				exception = e;
-//			}
-//		}
-//		throw exception;
-//	}
+	// public static ZonedDateTime parseToZonedDateTime(String date, String[]
+	// fromPattern, Locale locale) throws DateTimeParseException {
+	// DateTimeParseException exception = null;
+	// for (String pattern : fromPattern) {
+	// try {
+	// return parseToZonedDateTime(date, pattern, locale);
+	// } catch (DateTimeParseException e) {
+	// exception = e;
+	// }
+	// }
+	// throw exception;
+	// }
 
 	private static String parseToString(String formattedDate, String fromPattern, String toPattern) throws ParseException {
 		SimpleDateFormat formatter = new SimpleDateFormat(fromPattern);
@@ -130,13 +132,17 @@ public class DateUtil extends org.apache.commons.lang3.time.DateUtils {
 		return formatter.format(fromDate);
 	}
 
-//	private static LocalDate parseToLocalDate(String formattedDate, String fromPattern) {
-//		return LocalDate.parse(formattedDate, DateTimeFormatter.ofPattern(fromPattern));
-//	}
+	// private static LocalDate parseToLocalDate(String formattedDate, String
+	// fromPattern) {
+	// return LocalDate.parse(formattedDate,
+	// DateTimeFormatter.ofPattern(fromPattern));
+	// }
 
-//	private static ZonedDateTime parseToZonedDateTime(String formattedDate, String fromPattern, Locale locale) {
-//		return ZonedDateTime.parse(formattedDate, DateTimeFormatter.ofPattern(fromPattern, locale));
-//	}
+	// private static ZonedDateTime parseToZonedDateTime(String formattedDate,
+	// String fromPattern, Locale locale) {
+	// return ZonedDateTime.parse(formattedDate,
+	// DateTimeFormatter.ofPattern(fromPattern, locale));
+	// }
 
 	// ---------------- format
 
@@ -259,13 +265,13 @@ public class DateUtil extends org.apache.commons.lang3.time.DateUtils {
 	}
 
 	public static boolean isBeforeNow(ZonedDateTime dt) {
-		return dt.isBefore(ZonedDateTime.now());		
+		return dt.isBefore(ZonedDateTime.now());
 	}
 
 	public static ZonedDateTime Now() {
 		return ZonedDateTime.now();
 	}
-	
+
 	public static ZonedDateTime toZonedDateTime(long millis) {
 		Instant i = Instant.ofEpochMilli(millis);
 		return i.atZone(ZoneId.systemDefault());

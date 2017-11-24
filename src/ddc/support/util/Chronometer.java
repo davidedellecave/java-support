@@ -1,6 +1,7 @@
 package ddc.support.util;
 
 import java.util.Date;
+import java.util.concurrent.Callable;
 import java.util.concurrent.TimeUnit;
 
 public class Chronometer {
@@ -9,6 +10,10 @@ public class Chronometer {
 	private long endTime = -1;
 	private long countdown = 0;
 	private long countdownCounter = 0;
+
+	public static Chronometer instance() {
+		return new Chronometer();
+	}
 
 	public Chronometer(long startTime, long endTime) {
 		if (startTime <= endTime) {
@@ -47,8 +52,8 @@ public class Chronometer {
 	}
 
 	/**
-	 * Return true if countdown is passed one time (from start) The chronometer
-	 * is not stopped
+	 * Return true if countdown is passed one time (from start) The chronometer is
+	 * not stopped
 	 * 
 	 * @return
 	 * @see isCountdownCycle to ask more than one time
@@ -170,8 +175,16 @@ public class Chronometer {
 	public static void sleep(Timespan duration) {
 		sleep(duration.getMillis());
 	}
-	
+
 	public static void sleepMinutes(int minutes) {
 		sleep(new Timespan(minutes, TimeUnit.MINUTES));
+	}
+
+	public <T> T chronIt(Callable<T> task) throws Exception {
+		T call = null;
+		start();
+		call = task.call();
+		stop();
+		return call;
 	}
 }

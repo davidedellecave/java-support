@@ -2,12 +2,11 @@ package ddc.support.jdbc;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.JDBCType;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.Map;
 
+import ddc.support.jdbc.db.SqlTypeMap;
 import ddc.support.util.Chronometer;
 
 public abstract class JdbcConnectionFactory {
@@ -28,7 +27,7 @@ public abstract class JdbcConnectionFactory {
 
 	public abstract String getSqlLimitTemplate();
 	
-	public abstract Map<JDBCType, String> getSqlTypeMap();
+	public abstract SqlTypeMap getSqlTypeMap();
 
 	public String getHost() {
 		return conf.getHost();

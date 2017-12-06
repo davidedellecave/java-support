@@ -1,8 +1,5 @@
 package ddc.support.jdbc.db;
 
-import java.sql.JDBCType;
-import java.util.Map;
-
 import ddc.support.jdbc.JdbcConfig;
 import ddc.support.jdbc.JdbcConnectionFactory;
 

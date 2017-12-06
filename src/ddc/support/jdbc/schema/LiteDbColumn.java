@@ -7,6 +7,7 @@ public class LiteDbColumn {
 	private JDBCType type;
 	private boolean isNullable;
 	private int size = 0;
+	private int scale = 0;
 	private int index = 0;
 	private String desc = null;
 
@@ -87,6 +88,13 @@ public class LiteDbColumn {
 
 	public void setDesc(String desc) {
 		this.desc = desc;
+	}
+	public int getScale() {
+		return scale;
+	}
+
+	public void setScale(int scale) {
+		this.scale = scale;
 	}
 
 	@Override

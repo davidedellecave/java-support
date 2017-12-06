@@ -3,6 +3,7 @@ package ddc.support.util;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.Instant;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZoneOffset;
@@ -252,6 +253,10 @@ public class DateUtil {
 		return date.toInstant();
 	}
 
+	public static LocalDate toLocalDate(Instant instant) {
+		return LocalDate.from(instant);
+	}
+	
 	public static Date toDate(Instant instant) {
 		return Date.from(instant);
 	}

@@ -42,7 +42,7 @@ public class PostreSqlTypeMap extends SqlTypeMap {
 		put(JDBCType.TIMESTAMP, "TIMESTAMP");
 		put(JDBCType.TIME_WITH_TIMEZONE, "TIMESTAMPTZ");
 		put(JDBCType.TIMESTAMP_WITH_TIMEZONE, "TIMESTAMPTZ");
-		put(JDBCType.TINYINT,"TINYINT");
+		put(JDBCType.TINYINT,"SMALLINT");
 		put(JDBCType.VARBINARY, "VARBINARY");
 		put(JDBCType.VARCHAR, "VARCHAR");
 	}

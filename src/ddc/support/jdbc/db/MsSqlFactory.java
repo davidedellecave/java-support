@@ -1,8 +1,5 @@
 package ddc.support.jdbc.db;
 
-import java.sql.JDBCType;
-import java.util.Map;
-
 import ddc.support.jdbc.JdbcConfig;
 import ddc.support.jdbc.JdbcConnectionFactory;
 
@@ -14,6 +11,7 @@ public class MsSqlFactory extends JdbcConnectionFactory {
 
 	@Override
 	public String getUrl() {
+//		jdbc:sqlserver://[serverName[\instanceName][:portNumber]][;property=value[;property=value]]
 		return "jdbc:sqlserver://" + getHost() + ":" + getPort() + ";databaseName=" + getDatabase();
 	}
 
@@ -30,7 +28,7 @@ public class MsSqlFactory extends JdbcConnectionFactory {
 	@Override
 	public String getSqlLimitTemplate() {
 		// TODO Auto-generated method stub
-		return null;
+		return "SELECT TOP $MAXROWS $COLUMNS FROM $TABLE";
 	}
 
 

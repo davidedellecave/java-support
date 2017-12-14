@@ -5,10 +5,8 @@ import java.util.List;
 
 public class LiteDbCatalog {
 	private String catalogName = "";
-	private LiteDb database = new LiteDb();
+	private LiteDb database = null;
 	private List<LiteDbSchema> schemas = new ArrayList<LiteDbSchema>();
-
-	public LiteDbCatalog() {}
 	
 	public LiteDbCatalog(String catalogName, LiteDb database) {
 		this.catalogName=catalogName;

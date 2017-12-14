@@ -16,9 +16,12 @@ public class LiteDb {
 	private String databaseName = "";
 	private List<LiteDbCatalog> catalogs = new ArrayList<LiteDbCatalog>();
 
+	public LiteDb(String databaseName) {
+		this.databaseName=databaseName;
+	}
+	
 	public static LiteDb build(String databaseName, Connection connection) throws SQLException {
-		LiteDb liteDb = new LiteDb();
-		liteDb.setDatabaseName(databaseName);
+		LiteDb liteDb = new LiteDb(databaseName);
 		DatabaseMetaData meta = connection.getMetaData();
 		ResultSet rsCatalogs = meta.getCatalogs();
 		while (rsCatalogs.next()) {
@@ -50,13 +53,21 @@ public class LiteDb {
 						boolean isNullable = rsColumn.getInt("NULLABLE") == 1;
 						int columnSize = rsColumn.getInt("COLUMN_SIZE");
 						LiteDbColumn c = new LiteDbColumn(columnName, jdbcType, isNullable, columnSize, colCounter);
+						c.setScale(rsColumn.getInt("DECIMAL_DIGITS"));
 						liteTable.getColumns().add(c);
+					}
+					
+					ResultSet rsPK = meta.getPrimaryKeys(catalogName, schemaName, tableName);
+					while (rsPK.next()) {
+						 String colPKName = rsPK.getString("COLUMN_NAME");
+						 liteTable.addPKColumn(colPKName);
 					}
 				}
 			}
 		}
 		return liteDb;
 	}
+	
 
 	public List<LiteDbTable> findByCol(String colName) {
 		List<LiteDbTable> list = new ArrayList<>();
@@ -140,10 +151,6 @@ public class LiteDb {
 
 	public String getDatabaseName() {
 		return databaseName;
-	}
-
-	public void setDatabaseName(String databaseName) {
-		this.databaseName = databaseName;
 	}
 
 	public List<LiteDbCatalog> getCatalogs() {

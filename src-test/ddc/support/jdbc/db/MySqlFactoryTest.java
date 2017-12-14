@@ -8,7 +8,6 @@ import org.junit.Test;
 
 import ddc.support.jdbc.JdbcConfig;
 import ddc.support.jdbc.SqlRowHandler;
-import ddc.support.jdbc.SqlUtils;
 import ddc.support.util.Chronometer;
 import ddc.support.util.LogConsole;
 import ddc.support.util.LogListener;

@@ -5,12 +5,9 @@ import java.util.List;
 
 public class LiteDbSchema {
 	private String schemaName="";
-	private LiteDbCatalog catalog = new LiteDbCatalog();
+	private LiteDbCatalog catalog = null;
 	private List<LiteDbTable> tables = new ArrayList<LiteDbTable>();
-	
-	public LiteDbSchema() {
-	}	
-	
+		
 	public LiteDbSchema(String schemaName, LiteDbCatalog catalog) {
 		this.schemaName=schemaName;
 		this.catalog=catalog;

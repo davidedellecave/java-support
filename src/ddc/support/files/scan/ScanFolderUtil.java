@@ -1,6 +1,5 @@
 package ddc.support.files.scan;
 
-import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -9,7 +8,6 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-import ddc.support.files.scan.ScanFolder.ScanResult;
 import ddc.support.util.FileUtil;
 
 public class ScanFolderUtil {
@@ -26,9 +24,9 @@ public class ScanFolderUtil {
 		
 		ScanFolder s = new ScanFolder();
 		final List<Path> list = new ArrayList<>();
-		s.deepFirstScan(folder.toFile(), recursive, new BaseScanFolderHandler() {
+		s.deepFirstScan(folder, recursive, new BaseScanFolderHandler() {
 			@Override
-			public ScanResult handleFile(File file, ScanFolderContext ctx) {
+			public ScanResult handleFile(Path file, ScanFolderContext ctx) throws IOException {
 				boolean toAdd = false;
 				
 				if (olderThanMillis>0 && FileUtil.isNewerThan(file, olderThanMillis)) {
@@ -37,7 +35,7 @@ public class ScanFolderUtil {
 				
 				if (includeExtension.length > 0) {
 					for (String ext : includeExtension) {
-						if (file.getName().endsWith(ext))
+						if (file.getFileName().endsWith(ext))
 							toAdd = true;
 					}				
 				} else {
@@ -46,13 +44,13 @@ public class ScanFolderUtil {
 				
 				if (excludeExtension.length > 0) {
 					for (String ext : excludeExtension) {
-						if (file.getName().endsWith(ext))
+						if (file.getFileName().endsWith(ext))
 							toAdd = false;
 					}				
 				}
 
 				if (toAdd)
-					list.add(file.toPath());
+					list.add(file);
 				return ScanResult.continueScan;
 			}
 		});
@@ -61,9 +59,9 @@ public class ScanFolderUtil {
 	
 	public static void handleFiles(Path folder, ScanFolderHandlerFile handler)  throws Exception {
 		ScanFolder s = new ScanFolder();
-		s.deepFirstScan(folder.toFile(), true, new BaseScanFolderHandler() {
+		s.deepFirstScan(folder, true, new BaseScanFolderHandler() {
 			@Override
-			public ScanResult handleFile(File file, ScanFolderContext ctx) throws Exception {
+			public ScanResult handleFile(Path file, ScanFolderContext ctx) throws Exception {
 				return handler.handleFile(file, ctx);
 			}
 		});
@@ -75,10 +73,10 @@ public class ScanFolderUtil {
 		}
 		ScanFolder s = new ScanFolder();
 		final List<Path> list = new ArrayList<>();
-		s.deepFirstScan(folder.toFile(), true, new BaseScanFolderHandler() {
+		s.deepFirstScan(folder, true, new BaseScanFolderHandler() {
 			@Override
-			public ScanResult handleFile(File file, ScanFolderContext ctx) {
-				list.add(file.toPath());
+			public ScanResult handleFile(Path file, ScanFolderContext ctx) {
+				list.add(file);
 				return ScanResult.continueScan;
 			}
 		});
@@ -112,10 +110,10 @@ public class ScanFolderUtil {
 		}
 		ScanFolder s = new ScanFolder();
 		final List<Path> list = new ArrayList<>();
-		s.deepFirstScan(folder.toFile(), true, new BaseScanFolderHandler() {
+		s.deepFirstScan(folder, true, new BaseScanFolderHandler() {
 			@Override
-			public ScanResult preHandleFolder(File file, ScanFolderContext ctx) {
-				list.add(file.toPath());
+			public ScanResult preHandleFolder(Path file, ScanFolderContext ctx) {
+				list.add(file);
 				return ScanResult.continueScan;
 			}
 		});

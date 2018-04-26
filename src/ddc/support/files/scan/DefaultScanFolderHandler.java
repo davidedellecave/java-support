@@ -1,21 +1,19 @@
 package ddc.support.files.scan;
 
-import java.io.File;
-
-import ddc.support.files.scan.ScanFolder.ScanResult;
+import java.nio.file.Path;
 
 public class DefaultScanFolderHandler implements ScanFolderHandler {
-	public ScanResult handleFile(File file, ScanFolderContext ctx) {
+	public ScanResult handleFile(Path file, ScanFolderContext ctx) {
 		System.out.println("File:" + file);
 		return ScanResult.continueScan;
 	}
 	
-	public ScanResult preHandleFolder(File folder, ScanFolderContext ctx) {
+	public ScanResult preHandleFolder(Path folder, ScanFolderContext ctx) {
 		System.out.println("Pre folder->>:" + folder);
 		return ScanResult.continueScan;
 	}
 	
-	public ScanResult postHandleFolder(File folder, ScanFolderContext ctx) {
+	public ScanResult postHandleFolder(Path folder, ScanFolderContext ctx) {
 		System.out.println("Post folder<<-:" + folder);
 		return ScanResult.continueScan;
 	}

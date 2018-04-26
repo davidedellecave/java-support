@@ -1,14 +1,16 @@
 package ddc.support.files.scan;
 
-import java.io.File;
+import java.nio.file.Path;
 import java.util.List;
 
 public class ScanFolderContext {
 		private ScanFolderConfig config = null;
 		private ScanFolderStats stats = null;
-		private File folder = null;
-		private List<File> siblingFiles = null;
-		private List<File> siblingFolder = null;
+		private Path folder = null;
+		private List<Path> siblingFiles = null;
+		private List<Path> siblingFolder = null;
+
+		
 		public ScanFolderConfig getConfig() {
 			return config;
 		}
@@ -21,24 +23,22 @@ public class ScanFolderContext {
 		public void setStats(ScanFolderStats stats) {
 			this.stats = stats;
 		}
-		public File getFolder() {
+		public Path getFolder() {
 			return folder;
 		}
-		public void setFolder(File folder) {
+		public void setFolder(Path folder) {
 			this.folder = folder;
 		}
-		public List<File> getSiblingFiles() {
+		public List<Path> getSiblingFiles() {
 			return siblingFiles;
 		}
-		public void setSiblingFiles(List<File> siblingFiles) {
+		public void setSiblingFiles(List<Path> siblingFiles) {
 			this.siblingFiles = siblingFiles;
 		}
-		public List<File> getSiblingFolder() {
+		public List<Path> getSiblingFolder() {
 			return siblingFolder;
 		}
-		public void setSiblingFolder(List<File> siblingFolder) {
+		public void setSiblingFolder(List<Path> siblingFolder) {
 			this.siblingFolder = siblingFolder;
-		}
-		
-		
+		}		
 }

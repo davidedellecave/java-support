@@ -191,10 +191,12 @@ public class LiteDbTable {
 			}
 			sql.append(" " + typeName);
 			if (c.getType().equals(JDBCType.CHAR) || c.getType().equals(JDBCType.LONGNVARCHAR) || c.getType().equals(JDBCType.LONGVARCHAR) || c.getType().equals(JDBCType.NCHAR) || c.getType().equals(JDBCType.NVARCHAR)
-					|| c.getType().equals(JDBCType.VARCHAR)) {
+					|| c.getType().equals(JDBCType.VARCHAR) ) {
 				sql.append(" (" + c.getSize() + ")");
-			} else if (c.getType().equals(JDBCType.DECIMAL) || c.getType().equals(JDBCType.BIGINT) || c.getType().equals(JDBCType.NUMERIC)) {
+			} else if (c.getType().equals(JDBCType.DECIMAL) || c.getType().equals(JDBCType.NUMERIC)) {
 				sql.append(" (" + c.getSize() + "," + c.getScale() + ")");
+			} else if (c.getType().equals(JDBCType.BIGINT)) {
+				
 			}
 			if (!c.isNullable()) {
 				sql.append(" NOT NULL");

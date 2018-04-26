@@ -92,6 +92,11 @@ public class FileUtil {
 		long date = System.currentTimeMillis() - duration;
 		return (file.lastModified() >= date);
 	}
+	
+	public static boolean isNewerThan(Path file, long duration) throws IOException {
+		long date = System.currentTimeMillis() - duration;
+		return (Files.getLastModifiedTime(file).toMillis() >= date);
+	}
 
 	// public static String loadContent(String path) throws IOException {
 	// return new String(Files.readAllBytes(Paths.get(path)), "UTF-8");

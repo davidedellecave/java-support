@@ -1,22 +1,20 @@
 package ddc.support.files.scan;
 
-import java.io.File;
-
-import org.apache.commons.io.filefilter.IOFileFilter;
-import org.apache.commons.io.filefilter.TrueFileFilter;
+import java.nio.file.Path;
 
 public class ScanFolderConfig {
-	private File rootFolder = null;
+	private Path rootFolder = null;
 	private boolean isRecursive = true;
 	private long sleepMillis = 10;
-	private IOFileFilter dirFilter = TrueFileFilter.TRUE;
-	private IOFileFilter fileFilter = TrueFileFilter.TRUE;
+//	private IOFileFilter dirFilter = TrueFileFilter.TRUE;
+//	private IOFileFilter fileFilter = TrueFileFilter.TRUE;
+	private boolean zipEnabled = false;
 
-	public File getRootFolder() {
+	public Path getRootFolder() {
 		return rootFolder;
 	}
 
-	public void setRootFolder(File rootFolder) {
+	public void setRootFolder(Path rootFolder) {
 		this.rootFolder = rootFolder;
 	}
 
@@ -36,20 +34,25 @@ public class ScanFolderConfig {
 		this.sleepMillis = sleepMillis;
 	}
 
-	public IOFileFilter getDirFilter() {
-		return dirFilter;
+//	public IOFileFilter getDirFilter() {
+//		return dirFilter;
+//	}
+//
+//	public void setDirFilter(IOFileFilter dirFilter) {
+//		this.dirFilter = dirFilter;
+//	}
+//
+//	public IOFileFilter getFileFilter() {
+//		return fileFilter;
+//	}
+//
+//	public void setFileFilter(IOFileFilter fileFilter) {
+//		this.fileFilter = fileFilter;
+//	}
+	public boolean isZipEnabled() {
+		return zipEnabled;
 	}
-
-	public void setDirFilter(IOFileFilter dirFilter) {
-		this.dirFilter = dirFilter;
+	public void setZipEnabled(boolean zipEnabled) {
+		this.zipEnabled = zipEnabled;
 	}
-
-	public IOFileFilter getFileFilter() {
-		return fileFilter;
-	}
-
-	public void setFileFilter(IOFileFilter fileFilter) {
-		this.fileFilter = fileFilter;
-	}
-
 }

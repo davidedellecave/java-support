@@ -8,6 +8,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import ddc.support.jdbc.JdbcConnectionFactory;
+
 public class LiteDb {
 	// TABLE_TYPE String => table type. Typical types are "TABLE",
 	// "VIEW", "SYSTEM TABLE", "GLOBAL TEMPORARY", "LOCAL TEMPORARY", "ALIAS",
@@ -16,11 +18,17 @@ public class LiteDb {
 	private String databaseName = "";
 	private List<LiteDbCatalog> catalogs = new ArrayList<LiteDbCatalog>();
 
-	public LiteDb(String databaseName) {
-		this.databaseName=databaseName;
+	private LiteDb(String databaseName) {
+		this.databaseName = databaseName;
 	}
-	
-	public static LiteDb build(String databaseName, Connection connection) throws SQLException {
+
+	public static LiteDb build(JdbcConnectionFactory connectionFactory) throws SQLException, ClassNotFoundException {
+		try (Connection conn = connectionFactory.createConnection()) {
+			return build(connectionFactory.getDatabase(), conn);
+		}
+	}
+
+	private static LiteDb build(String databaseName, Connection connection) throws SQLException {
 		LiteDb liteDb = new LiteDb(databaseName);
 		DatabaseMetaData meta = connection.getMetaData();
 		ResultSet rsCatalogs = meta.getCatalogs();
@@ -56,26 +64,26 @@ public class LiteDb {
 						c.setScale(rsColumn.getInt("DECIMAL_DIGITS"));
 						liteTable.getColumns().add(c);
 					}
-					
+
 					ResultSet rsPK = meta.getPrimaryKeys(catalogName, schemaName, tableName);
 					while (rsPK.next()) {
-						 String colPKName = rsPK.getString("COLUMN_NAME");
-						 liteTable.addPKColumn(colPKName);
+						String colPKName = rsPK.getString("COLUMN_NAME");
+						liteTable.addPKColumn(colPKName);
 					}
 				}
 			}
 		}
 		return liteDb;
 	}
-	
 
-	public List<LiteDbTable> findByCol(String colName) {
+	public List<LiteDbTable> findByCol(String name) {
+		name=name.toLowerCase();
 		List<LiteDbTable> list = new ArrayList<>();
 		for (LiteDbCatalog c : catalogs) {
 			for (LiteDbSchema s : c.getSchemas()) {
 				for (LiteDbTable t : s.getTables()) {
 					for (LiteDbColumn cl : t.getColumns()) {
-						if (cl.getName().contains(colName)) {
+						if (cl.getName().toLowerCase().contains(name)) {
 							list.add(t);
 							break;
 						}
@@ -86,12 +94,13 @@ public class LiteDb {
 		return list;
 	}
 
-	public List<LiteDbTable> findByTable(String tableName) {
+	public List<LiteDbTable> findByTable(String name) {
+		name=name.toLowerCase();
 		List<LiteDbTable> list = new ArrayList<>();
 		for (LiteDbCatalog c : catalogs) {
 			for (LiteDbSchema s : c.getSchemas()) {
 				for (LiteDbTable t : s.getTables()) {
-					if (t.getTableName().contains(tableName))
+					if (t.getTableName().toLowerCase().contains(name))
 						list.add(t);
 				}
 			}
@@ -99,11 +108,12 @@ public class LiteDb {
 		return list;
 	}
 
-	public List<LiteDbTable> findBySchema(String schemaName) {
+	public List<LiteDbTable> findBySchema(String name) {
+		name=name.toLowerCase();
 		List<LiteDbTable> list = new ArrayList<>();
 		for (LiteDbCatalog c : catalogs) {
 			for (LiteDbSchema s : c.getSchemas()) {
-				if (s.getSchemaName().contains(schemaName)) {
+				if (s.getSchemaName().toLowerCase().contains(name)) {
 					for (LiteDbTable t : s.getTables()) {
 						list.add(t);
 					}
@@ -113,10 +123,11 @@ public class LiteDb {
 		return list;
 	}
 
-	public List<LiteDbTable> findByCatalog(String catalogName) {
+	public List<LiteDbTable> findByCatalog(String name) {
+		name=name.toLowerCase();
 		List<LiteDbTable> list = new ArrayList<>();
 		for (LiteDbCatalog c : catalogs) {
-			if (c.getCatalogName().contains(catalogName)) {
+			if (c.getCatalogName().toLowerCase().contains(name)) {
 				for (LiteDbSchema s : c.getSchemas()) {
 					for (LiteDbTable t : s.getTables()) {
 						list.add(t);
@@ -138,7 +149,7 @@ public class LiteDb {
 		}
 		return list;
 	}
-	
+
 	public List<LiteDbSchema> getAllSchemas() {
 		List<LiteDbSchema> list = new ArrayList<>();
 		for (LiteDbCatalog c : catalogs) {

@@ -9,6 +9,8 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.Enumeration;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -31,8 +33,8 @@ public class ZipUtils {
 	 * @param destinationPath destination path
 	 * @throws IOException
 	 */
-	public static void unzip(String zipName, String destinationPath)	throws IOException {
-		unzip(new File(zipName), destinationPath);
+	public static void unzip(String zipName, String destinationPath, boolean overwrite)	throws IOException {
+		unzip(new File(zipName), destinationPath, overwrite);
 	}
 
 	/**
@@ -43,7 +45,7 @@ public class ZipUtils {
 	 * @param destinationPath Destination path
 	 * @throws IOException
 	 */
-	public static List<File> unzip(File zipFile, String destinationPath) throws IOException {
+	public static List<File> unzip(File zipFile, String destinationPath, boolean overwrite) throws IOException {
 		FileOutputStream out = null;
 		LinkedList<File> unzipList = new LinkedList<File>();
 		ZipFile zf = new ZipFile(zipFile);
@@ -53,10 +55,15 @@ public class ZipUtils {
 				ZipEntry entry = (ZipEntry) enum1.nextElement();
 				if (!entry.isDirectory()) { 
 					//save entry
-					File unzippedFile = new File(destinationPath, entry.getName());
-					out = new FileOutputStream(unzippedFile );
-					IOUtils.copy(zf.getInputStream(entry), out);
-					unzipList.add(unzippedFile);
+					File unzippedFile = new File(destinationPath, entry.getName());					
+					if (! (new File(unzippedFile.getParent()).exists())) {
+						Files.createDirectories(Paths.get(unzippedFile.getParent()));
+					}
+					if (!unzippedFile.exists() || overwrite)  {
+						out = new FileOutputStream(unzippedFile );
+						IOUtils.copy(zf.getInputStream(entry), out);
+						unzipList.add(unzippedFile);						
+					}
 				}
 			}
 		} finally {

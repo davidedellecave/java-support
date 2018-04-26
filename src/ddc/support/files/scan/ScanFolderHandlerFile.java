@@ -1,9 +1,7 @@
 package ddc.support.files.scan;
 
-import java.io.File;
-
-import ddc.support.files.scan.ScanFolder.ScanResult;
+import java.nio.file.Path;
 
 public interface ScanFolderHandlerFile {
-	public ScanResult handleFile(File file, ScanFolderContext ctx) throws Exception;
+	public ScanResult handleFile(Path file, ScanFolderContext ctx) throws Exception;
 }

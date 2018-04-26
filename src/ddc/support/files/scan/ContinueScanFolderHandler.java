@@ -1,8 +1,6 @@
 package ddc.support.files.scan;
 
-import java.io.File;
-
-import ddc.support.files.scan.ScanFolder.ScanResult;
+import java.nio.file.Path;
 
 public class ContinueScanFolderHandler implements ScanFolderHandler{
 
@@ -16,16 +14,16 @@ public class ContinueScanFolderHandler implements ScanFolderHandler{
 		return ScanResult.continueScan;	}
 
 	@Override
-	public ScanResult handleFile(File file, ScanFolderContext ctx) throws Exception {
+	public ScanResult handleFile(Path file, ScanFolderContext ctx) throws Exception {
 		return ScanResult.continueScan;	}
 
 	@Override
-	public ScanResult preHandleFolder(File folder, ScanFolderContext ctx)
+	public ScanResult preHandleFolder(Path folder, ScanFolderContext ctx)
 			throws Exception {
 		return ScanResult.continueScan;	}
 
 	@Override
-	public ScanResult postHandleFolder(File folder, ScanFolderContext ctx)
+	public ScanResult postHandleFolder(Path folder, ScanFolderContext ctx)
 			throws Exception {
 		return ScanResult.continueScan;
 	}

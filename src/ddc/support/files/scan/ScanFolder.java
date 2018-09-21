@@ -62,6 +62,17 @@ public class ScanFolder {
 		deepFirstScan(c, scanHandler);
 	}
 
+	public void deepFirstScan(ScanFolderHandler scanHandler) throws Exception {
+		if (scanHandler == null)
+			scanHandler = new DefaultScanFolderHandler();
+		context = new ScanFolderContext();
+		context.setConfig(config);
+		context.setStats(new ScanFolderStats());
+		proxyStartScan(context, scanHandler);
+		doDeepFirstTraversing(config.getRootFolder(), context, scanHandler, ScanResult.continueScan, config.isZipEnabled());
+		proxyEndScan(context, scanHandler);
+	}
+
 	public void deepFirstScan(ScanFolderConfig config, ScanFolderHandler scanHandler) throws Exception {
 		if (scanHandler == null)
 			scanHandler = new DefaultScanFolderHandler();

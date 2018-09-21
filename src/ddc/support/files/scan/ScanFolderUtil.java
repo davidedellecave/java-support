@@ -15,6 +15,24 @@ public class ScanFolderUtil {
 	public static List<Path> getFiles(Path folder, boolean recursive, final String[] includeExtension, final String[] excludeExtension) throws Exception {
 		return getFiles(folder, recursive, -1, includeExtension, excludeExtension);
 	}
+	
+	public static List<Path> getFilesStartWith(Path folder, boolean recursive, String startName) throws Exception {
+		final List<Path> list = new ArrayList<>();
+		ScanFolder s = new ScanFolder();
+		s.getConfig().setRootFolder(folder);
+		s.getConfig().setRecursive(recursive);
+		final String startNameLowercase = startName.toLowerCase();
+		s.deepFirstScan(new BaseScanFolderHandler() {
+			@Override
+			public ScanResult handleFile(Path file, ScanFolderContext ctx) throws Exception {
+				if (file.getFileName().toString().toLowerCase().startsWith(startNameLowercase)) {
+					list.add(file);
+				}
+				return ScanResult.continueScan;
+			}	
+		});
+		return list;
+	}
 
 	public static List<Path> getFiles(Path folder, boolean recursive, long olderThanMillis, final String[] includeExtension, final String[] excludeExtension)
 			throws Exception {

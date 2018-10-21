@@ -11,7 +11,7 @@ import ddc.support.util.Chronometer;
 
 public abstract class JdbcConnectionFactory {
 	private final static int DEFAULT_CONNECTION_RETRY = 1;
-	private final static int DEFAULT_CONNECTION_WAIT = 30*1000;	
+	private final static int DEFAULT_CONNECTION_WAIT = 30 * 1000;
 	private boolean driverLoaded = false;
 	private JdbcConfig conf;
 
@@ -26,7 +26,7 @@ public abstract class JdbcConnectionFactory {
 	public abstract int getDefaultPort();
 
 	public abstract String getSqlLimitTemplate();
-	
+
 	public abstract SqlTypeMap getSqlTypeMap();
 
 	public String getHost() {
@@ -57,24 +57,20 @@ public abstract class JdbcConnectionFactory {
 		return s;
 	}
 
-	public String getSqlSubqueryLimitTemplate(String table, String subquery, int limit) {		
+	public String getSqlSubqueryLimitTemplate(String table, String subquery, int limit) {
 		return getSqlLimit("(" + subquery + ") T", "*", limit);
 	}
-	
-	
+
 	public Connection createConnection() throws SQLException, ClassNotFoundException {
 		loadDriver();
-		Chronometer chron = new Chronometer();
-		System.out.println("Getting sql connection:[" + getUrl() + "] user:[" + conf.getUser() + "] ...");
 		Connection c = DriverManager.getConnection(getUrl(), conf.getUser(), conf.getPassword());
-		System.out.println("Sql connection created:[" + getUrl() + "] user:[" + conf.getUser() + "] elapsed:[" + chron.toString() + "]");
 		return c;
 	}
 
 	public Connection createConnection(int retry) throws SQLException, ClassNotFoundException {
 		return createConnection(retry, DEFAULT_CONNECTION_WAIT);
 	}
-	
+
 	public Connection createConnection(int retry, long waitMillis) throws SQLException, ClassNotFoundException {
 		Chronometer chron = new Chronometer();
 		retry = retry > 0 ? retry : DEFAULT_CONNECTION_RETRY;
@@ -86,11 +82,11 @@ public abstract class JdbcConnectionFactory {
 				if (counter > 0)
 					Chronometer.sleep(waitMillis);
 				chron.start();
-				Connection conn = createConnection();				
+				Connection conn = createConnection();
 				return conn;
 			} catch (Throwable e) {
 				counter++;
-				System.out.println("Connection failed - connection:[" + this.toString() + "] \n\t elapsed:["+ chron.toString() +"] \n\t exception:[" + e.getMessage() + "] \n\t retry... " + counter + "/" + retry);
+				System.err.println("Connection failed - connection:[" + this.toString() + "] \n\t elapsed:[" + chron.toString() + "] \n\t exception:[" + e.getMessage() + "] \n\t retry... " + counter + "/" + retry);
 				exception = e;
 			}
 		}
@@ -101,9 +97,34 @@ public abstract class JdbcConnectionFactory {
 		if (driverLoaded)
 			return;
 		Class.forName(getDriver());
-		System.out.println("Sql driver loaded:[" + getDriver() + "]");
-		
 		driverLoaded = true;
+	}
+
+	public static String getConnectionInfo(Connection connection) throws SQLException {
+		String info = "- Connection ";
+		if (connection == null) {
+			info += "is null";
+			return info;
+		}
+		try {
+			if (connection.getMetaData() != null) {
+				if (connection.getMetaData().getDatabaseProductName() != null && connection.getMetaData().getDatabaseProductVersion() != null) {
+					info += " Product:[" + connection.getMetaData().getDatabaseProductName() + " " + connection.getMetaData().getDatabaseProductVersion() + "]";
+					info += " Driver:[" + connection.getMetaData().getDriverName() + " " + connection.getMetaData().getDriverVersion() + "]";
+				}
+			}
+		} catch(Throwable t) { }
+		try {
+			if (connection.getCatalog() != null) {
+				info += " Catalog:[" + connection.getCatalog() + "]";
+			}
+		} catch(Throwable t) { }
+		try {
+			if (connection.getSchema() != null) {
+				info += " Schema:[" + connection.getSchema() + "]";
+			}
+		} catch(Throwable t) { }
+		return info;
 	}
 
 	public static void close(PreparedStatement statement) {
@@ -134,7 +155,6 @@ public abstract class JdbcConnectionFactory {
 		if (connection != null) {
 			try {
 				if (!connection.isClosed()) {
-					System.out.println("Sql connection closing - catalog:[" + connection.getCatalog() + "]");
 					connection.close();
 				}
 			} catch (SQLException e) {

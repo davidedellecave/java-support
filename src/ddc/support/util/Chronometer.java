@@ -51,6 +51,10 @@ public class Chronometer {
 		this.countdown = countdown;
 	}
 
+	public long getCountdownMillis() {
+		return this.countdown;
+	}
+
 	/**
 	 * Return true if countdown is passed one time (from start) The chronometer is
 	 * not stopped
@@ -86,7 +90,10 @@ public class Chronometer {
 	 * @return
 	 */
 	public long countdownCycle() {
-		return (long) (getElapsed() / countdown);
+		if (countdown > 0)
+			return (long) (getElapsed() / countdown);
+		else
+			return 0;
 	}
 
 	/**

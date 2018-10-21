@@ -12,7 +12,6 @@ import java.sql.Statement;
 import org.apache.commons.lang3.StringUtils;
 
 import ddc.support.util.Chronometer;
-import ddc.support.util.LogConsole;
 import ddc.support.util.LogListener;
 
 public class SqlUtils {
@@ -36,19 +35,57 @@ public class SqlUtils {
 	private final static int RS_CONCURRENCY = ResultSet.CONCUR_READ_ONLY;
 	private final static int FETCH_SIZE = 100000;
 	private final static int VERBOSE_COUNT = 10;
-	private static LogListener logger = new LogConsole(SqlUtils.class);
+	private static LogListener logger = null; //new LogConsole(SqlUtils.class);
 
-	public void setLogListener(LogListener logger) {
+	public static void setLogListener(LogListener logger) {
 		SqlUtils.logger = logger;
+	}
+	
+	private static void log(String message) {
+		if (logger!=null) {
+			log(message);
+		}
+	}
+	
+	public static Connection createConnection(JdbcConnectionFactory jdbcConnectionFactory) throws SQLException, ClassNotFoundException {
+		Chronometer chron = new Chronometer();
+		String logInfo = "Getting sql connection:[" + jdbcConnectionFactory.getUrl() + "] user:[" + jdbcConnectionFactory.getUser() + "] ..."; 
+		log(logInfo);
+		Connection c = jdbcConnectionFactory.createConnection();	
+		String info=JdbcConnectionFactory.getConnectionInfo(c);		
+		logInfo = "Sql connection created:[" + jdbcConnectionFactory.getUrl() + "] user:[" + jdbcConnectionFactory.getUser() + "] elapsed:[" + chron.toString() + "] " + info;		
+		log(logInfo);
+		return c;
+	}
+	
+	public static void close(Connection connection) throws SQLException {
+		if (connection==null) {
+			log("Sql connection already closed");
+			return;
+		}
+		String info=JdbcConnectionFactory.getConnectionInfo(connection);
+		log("Sql connection closing" + info + " ..."); 
+		JdbcConnectionFactory.close(connection);
+	}
+
+	public static void close(Statement statement) throws SQLException {
+		if (statement==null) {
+			log("Sql statement already closed");
+			return;
+		}
+		String info=JdbcConnectionFactory.getConnectionInfo(statement.getConnection());
+		log("Sql statement closing[" + info + "] ..."); 
+		JdbcConnectionFactory.close(statement);
 	}
 
 	public static void select(Connection connection, String sql, SqlRowHandler handler) throws Exception {
-		logger.debug("Executing... sql:[" + sql + "]");
+		log("Executing... sql:[" + sql + "]");
 		Statement statement = null;
 		ResultSet rs = null;
 		try {
 			Chronometer chron = new Chronometer();
-			statement = connection.createStatement(ResultSet.TYPE_FORWARD_ONLY, ResultSet.FETCH_FORWARD);
+//			statement = connection.createStatement(ResultSet.TYPE_FORWARD_ONLY, ResultSet.FETCH_FORWARD);
+			statement = connection.createStatement(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_UPDATABLE);
 			statement.setFetchSize(FETCH_SIZE);
 			rs = statement.executeQuery(sql);
 			// ResultSetMetaData meta = rs.getMetaData();
@@ -59,10 +96,10 @@ public class SqlUtils {
 				if (counter <= VERBOSE_COUNT) {
 					printHandler(counter, rs, 40);
 					if (counter == VERBOSE_COUNT)
-						logger.debug("more rows....");
+						log("more rows....");
 				}
 			}
-			logger.info("Executed - sql:[" + sql + "] elapsed:[" + chron.toString() + "]");
+			log("Executed - sql:[" + sql + "] elapsed:[" + chron.toString() + "]");
 		} finally {
 			if (statement != null && !statement.isClosed())
 				statement.close();
@@ -72,7 +109,7 @@ public class SqlUtils {
 	}
 
 	public static String selectOneField(Connection connection, String sql) throws Exception {
-		logger.debug("Executing... sql:[" + sql + "]");
+		log("Executing... sql:[" + sql + "]");
 		Statement statement = null;
 		ResultSet rs = null;
 		try {
@@ -85,7 +122,7 @@ public class SqlUtils {
 			if (rs.next()) {
 				result = rs.getString(1);
 			}
-			logger.info("Executed - sql:[" + sql + "] elapsed:[" + chron.toString() + "]");
+			log("Executed - sql:[" + sql + "] elapsed:[" + chron.toString() + "]");
 			return result;
 		} finally {
 			if (statement != null && !statement.isClosed())
@@ -96,20 +133,20 @@ public class SqlUtils {
 	}
 
 	public static void execute(Connection connection, String sql) throws SQLException {
-		logger.debug("Executing... catalog:[" + connection.getCatalog() + "] sql:[" + sql + "]");
+		log("Executing... catalog:[" + connection.getCatalog() + "] sql:[" + sql + "]");
 		Statement statement = null;
 		try {
 			Chronometer chron = new Chronometer();
 			statement = connection.createStatement(RS_TYPE, RS_CONCURRENCY);
 			statement.execute(sql);
-			logger.info("Executed - catalog:[" + connection.getCatalog() + "] sql:[" + sql + "] elapsed:[" + chron.toString() + "]");
+			log("Executed - catalog:[" + connection.getCatalog() + "] sql:[" + sql + "] elapsed:[" + chron.toString() + "]");
 		} finally {
 			if (statement != null && !statement.isClosed())
 				statement.close();
 		}
 	}
 
-	static void printHandler(long counter, ResultSet rs, int colSize) throws SQLException {
+	static public void printHandler(long counter, ResultSet rs, int colSize) throws SQLException {
 		ResultSetMetaData meta = rs.getMetaData();
 		String message = "";
 		if (counter == 1) {
@@ -121,8 +158,8 @@ public class SqlUtils {
 				message += col + " |";
 				sep += StringUtils.repeat("=", colSize) + " |";
 			}
-			logger.debug(message);
-			logger.debug(sep);
+			log(message);
+			log(sep);
 		}
 		message = "";
 		for (int i = 1; i <= meta.getColumnCount(); i++) {
@@ -132,7 +169,7 @@ public class SqlUtils {
 			String col = StringUtils.rightPad(v, colSize);
 			message += col + " |";
 		}
-		logger.debug(message);
+		log(message);
 	}
 
 	public static String getRowInfo(ResultSetMetaData meta) throws SQLException {

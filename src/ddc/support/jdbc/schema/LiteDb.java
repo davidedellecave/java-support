@@ -23,8 +23,12 @@ public class LiteDb {
 	}
 
 	public static LiteDb build(JdbcConnectionFactory connectionFactory) throws SQLException, ClassNotFoundException {
-		try (Connection conn = connectionFactory.createConnection()) {
+		Connection conn = null;
+		try {
+			conn = connectionFactory.createConnection();
 			return build(connectionFactory.getDatabase(), conn);
+		} finally {
+			JdbcConnectionFactory.close(conn);
 		}
 	}
 
@@ -77,7 +81,7 @@ public class LiteDb {
 	}
 
 	public List<LiteDbTable> findByCol(String name) {
-		name=name.toLowerCase();
+		name = name.toLowerCase();
 		List<LiteDbTable> list = new ArrayList<>();
 		for (LiteDbCatalog c : catalogs) {
 			for (LiteDbSchema s : c.getSchemas()) {
@@ -95,7 +99,7 @@ public class LiteDb {
 	}
 
 	public List<LiteDbTable> findByTable(String name) {
-		name=name.toLowerCase();
+		name = name.toLowerCase();
 		List<LiteDbTable> list = new ArrayList<>();
 		for (LiteDbCatalog c : catalogs) {
 			for (LiteDbSchema s : c.getSchemas()) {
@@ -109,7 +113,7 @@ public class LiteDb {
 	}
 
 	public List<LiteDbTable> findBySchema(String name) {
-		name=name.toLowerCase();
+		name = name.toLowerCase();
 		List<LiteDbTable> list = new ArrayList<>();
 		for (LiteDbCatalog c : catalogs) {
 			for (LiteDbSchema s : c.getSchemas()) {
@@ -124,7 +128,7 @@ public class LiteDb {
 	}
 
 	public List<LiteDbTable> findByCatalog(String name) {
-		name=name.toLowerCase();
+		name = name.toLowerCase();
 		List<LiteDbTable> list = new ArrayList<>();
 		for (LiteDbCatalog c : catalogs) {
 			if (c.getCatalogName().toLowerCase().contains(name)) {

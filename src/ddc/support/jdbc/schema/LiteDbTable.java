@@ -220,7 +220,7 @@ public class LiteDbTable {
 	}
 
 	public String buildInsertInto() {
-		String sql = "INSERT INTO " + getTableName() + " (";
+		String sql = "INSERT INTO \"" + getTableName() + "\" (";
 		sql += StringUtils.join(getColumns(), ",");
 		sql += ")";
 		sql += " VALUES (";

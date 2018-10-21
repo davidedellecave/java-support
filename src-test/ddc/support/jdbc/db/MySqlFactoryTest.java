@@ -6,7 +6,6 @@ import java.sql.Statement;
 
 import org.junit.Test;
 
-import ddc.support.jdbc.JdbcConfig;
 import ddc.support.jdbc.SqlRowHandler;
 import ddc.support.util.Chronometer;
 import ddc.support.util.LogConsole;
@@ -16,26 +15,26 @@ public class MySqlFactoryTest {
 	private final static LogListener logger = new LogConsole(MySqlFactoryTest.class);
 	@Test
 	public void testGetSqlLimitTemplate() throws Exception {
-		JdbcConfig conf = new JdbcConfig();
-		conf.setDatabase("dataquality");
-		conf.setHost("192.168.76.224");
-		conf.setUser("root");
-		conf.setPassword("Davidedc3");
-		MySqlFactory f = new MySqlFactory(conf);
-		Connection conn = f.createConnection();
-	
-		
-//		SqlUtils.printSqlSelect(conn, "SELECT * FROM RET_movimenti LIMIT 1000000", System.out, 40);
-		String sql = "SELECT * FROM RET_movimenti LIMIT 5000000";
-//		String sql = "SELECT * FROM RET_movimenti";
-		conn.setAutoCommit(false);
-		select(conn, sql, new SqlRowHandler() {			
-			@Override
-			public void handle(long counter, ResultSet rs) throws Exception {
-				// TODO Auto-generated method stub
-				
-			}
-		});
+//		JdbcConfig conf = new JdbcConfig();
+//		conf.setDatabase("dataquality");
+//		conf.setHost("192.168.76.224");
+//		conf.setUser("root");
+//		conf.setPassword("Davidedc3");
+//		MySqlFactory f = new MySqlFactory(conf);
+//		Connection conn = f.createConnection();
+//	
+//		
+////		SqlUtils.printSqlSelect(conn, "SELECT * FROM RET_movimenti LIMIT 1000000", System.out, 40);
+//		String sql = "SELECT * FROM RET_movimenti LIMIT 5000000";
+////		String sql = "SELECT * FROM RET_movimenti";
+//		conn.setAutoCommit(false);
+//		select(conn, sql, new SqlRowHandler() {			
+//			@Override
+//			public void handle(long counter, ResultSet rs) throws Exception {
+//				// TODO Auto-generated method stub
+//				
+//			}
+//		});
 	}
 
 	private static int FETCH_SIZE = 10;

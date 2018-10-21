@@ -66,7 +66,6 @@ public class DateUtil {
 			}
 		}
 		throw exception;
-
 	}
 
 	public static Date parseToDate(String formattedDate, String[] pattern) throws ParseException {
@@ -79,7 +78,6 @@ public class DateUtil {
 			}
 		}
 		throw exception;
-
 	}
 
 	public static Date parseToDate(String formattedDate, String pattern) throws ParseException {
@@ -145,6 +143,22 @@ public class DateUtil {
 	// DateTimeFormatter.ofPattern(fromPattern, locale));
 	// }
 
+	// ---------------- conversion
+	// (1) LocalDateTime << Instant<< Date
+	public static LocalDateTime DateToLocalDateTime(Date date) {
+		Instant instant = Instant.ofEpochMilli(date.getTime());
+		LocalDateTime ldt = LocalDateTime.ofInstant(instant, ZoneOffset.UTC);
+		return ldt;
+	}
+
+	// (2)Date<<Instant<<LocalDateTime
+	public static Date LocalDateTimeToDate(LocalDateTime ldt) {
+		Instant instant = ldt.toInstant(ZoneOffset.UTC);
+		Date date = Date.from(instant);
+		return date;
+	}
+	
+	
 	// ---------------- format
 
 	public static String format(long timestamp, String pattern) {

@@ -16,17 +16,17 @@ public class LiteXmlTest {
 
 	@Test
 	public void testCreateDocument() throws IOException, LiteXmlException {
-		LiteXml xml = (LiteXml) getXml();
-		System.out.println(xml);
+//		LiteXml xml = (LiteXml) getXml();
+//		System.out.println(xml);
 	}
 
 	@Test
 	public void testGetAttrsAsMap() throws Exception {
-		LiteXml xml = (LiteXml) getXml();
-		
-		Element elem = xml.getElementByTagName("prop");
-		Map<String, String> map = xml.getAttributes(elem);
-		System.out.println(map.toString());
+//		LiteXml xml = (LiteXml) getXml();
+//		
+//		Element elem = xml.getElementByTagName("prop");
+//		Map<String, String> map = xml.getAttributes(elem);
+//		System.out.println(map.toString());
 	}
 	
 

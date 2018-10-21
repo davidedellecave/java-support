@@ -13,7 +13,7 @@ public class ZipUtilsTest {
 		String p = "/Users/davide/tmp/LogPref/LogAvivaPreferred.zip";
 
 		Path path = Paths.get(p);
-		ZipUtils.unzip(p, "/Users/davide/tmp/LogPref/unzip", true);
+//		ZipUtils.unzip(p, "/Users/davide/tmp/LogPref/unzip", true);
 	}
 
 }

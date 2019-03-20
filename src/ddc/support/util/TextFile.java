@@ -6,9 +6,11 @@ import static java.nio.file.StandardOpenOption.CREATE;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URISyntaxException;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.List;
 
 public class TextFile {
 	private Path path = null;
@@ -51,6 +53,10 @@ public class TextFile {
 
 	public static String load(Path path) throws UnsupportedEncodingException, IOException {
 		return new String(Files.readAllBytes(path), "UTF-8");
+	}
+	
+	public static List<String> loadLines(Path path) throws UnsupportedEncodingException, IOException {
+		return Files.readAllLines(path, StandardCharsets.UTF_8);
 	}
 	
 	public static TextFile newLoadInstance(Path path) throws UnsupportedEncodingException, IOException {

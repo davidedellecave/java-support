@@ -17,28 +17,28 @@ public class StringUtil {
 	public static String toCharset(String source, Charset fromCharset, Charset toCharset) {
 		return new String(source.getBytes(fromCharset), toCharset);
 	}
-	
-    public static String left(final String str, final int len) {
-        if (str == null) {
-            return null;
-        }
-        if (len < 0) {
-            return "";
-        }
-        if (str.length() <= len) {
-            return str;
-        }
-        return str.substring(0, len);
-    }
-    
-    public static boolean isEmpty(final CharSequence cs) {
-        return cs == null || cs.length() == 0;
-    }
-    
-	public static boolean isBlank(String s) {
-		return s==null || s.length()==0 || s.trim().length()==0;
+
+	public static String left(final String str, final int len) {
+		if (str == null) {
+			return null;
+		}
+		if (len < 0) {
+			return "";
+		}
+		if (str.length() <= len) {
+			return str;
+		}
+		return str.substring(0, len);
 	}
-	
+
+	public static boolean isEmpty(final CharSequence cs) {
+		return cs == null || cs.length() == 0;
+	}
+
+	public static boolean isBlank(String s) {
+		return s == null || s.length() == 0 || s.trim().length() == 0;
+	}
+
 	public static StringBuilder removeEnd(final StringBuilder str, final char remove) {
 		if (str == null || str.length() == 0)
 			return str;
@@ -66,16 +66,31 @@ public class StringUtil {
 		return out;
 	}
 
-	// public static String removeNonPrintable(final String str) {
-	// if (str==null || str.length()==0) return str;
-	//
-	// StringBuilder out = new StringBuilder(str.length());
-	// for (int i=0; i<str.length(); i++) {
-	// char ch = str.charAt(i);
-	// if (ch>31) out.append(ch);
-	// }
-	// return out.toString();
-	// }
+	public static String noAsciiCharsToUnicode(String s) {
+		StringBuilder b = new StringBuilder();
+		for (char c : s.toCharArray()) {
+			if (c > 128) {
+				b.append("\\u").append(Integer.toHexString(c));
+			} else {
+				b.append(c);
+			}
+		}
+		return b.toString();
+	}
+
+	// &#xhhhh;
+	public static String noAsciiCharsToXml(String s) {
+		StringBuilder b = new StringBuilder();
+		for (char c : s.toCharArray()) {
+			if (c > 128 || c == '>' || c == '<' || c == '&' || c == '"' || c == '\\') {
+				b.append("&#x").append(Integer.toHexString(c));
+				b.append(";");
+			} else {
+				b.append(c);
+			}
+		}
+		return b.toString();
+	}
 
 	// Remove all chars minus or equal than ASCII (decimal) 31
 	public static String removeNonPrintable(final CharSequence cs) {
@@ -98,5 +113,4 @@ public class StringUtil {
 		}
 		return returnVal;
 	}
-
 }

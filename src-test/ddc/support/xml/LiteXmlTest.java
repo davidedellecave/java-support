@@ -2,11 +2,9 @@ package ddc.support.xml;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Map;
 
 import org.apache.commons.io.IOUtils;
 import org.junit.Test;
-import org.w3c.dom.Element;
 
 import ddc.support.util.StringOutputStream;
 

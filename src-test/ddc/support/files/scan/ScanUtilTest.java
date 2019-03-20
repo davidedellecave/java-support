@@ -7,6 +7,8 @@ import java.util.List;
 
 import org.junit.Test;
 
+import ddc.support.files.scan.ScanFolderUtil.ScanUtilResult;
+
 public class ScanUtilTest {
 
 	// @Test
@@ -21,19 +23,41 @@ public class ScanUtilTest {
 	// }
 
 	@Test
-	public void testGetLastFile() throws Exception, IOException {
+	public void testList() throws Exception {
+		test_1();
+		// testGetLastFile();
+
+	}
+
+	private void test_1() throws Exception {
+		String p = "/Volumes/video/";
+		Path path = Paths.get(p);
+		System.out.println("Start...");
+		ScanUtilResult r = ScanFolderUtil.getFilesRecurse(path, true);
+		System.out.println("found :#" + r.list.size());
+		System.out.println("Listing...");
+		r.list.forEach(x -> {
+			// if (x.getFileName().startsWith("ItemProcessor"))
+			System.out.println(x);
+
+		});
+		System.out.println(r.stats);
+		System.out.println("Terminated");
+	}
+
+	private void testGetLastFile() throws Exception, IOException {
 		// String p = "/Users/davide/OneDrive/OneDrive - S2E Sprint
 		// srl/ACIGlobal/KpiRete/s2e-src-Kpi_Rete/tag/rc";
 
 		// String p = "/Users/davide/tmp/LogPref";
-//		String p = "/Users/davide/ddc/src";
+		// String p = "/Users/davide/ddc/src";
 		String p = "/Users/davide/ddc/src/eclipse-workspace";
 		Path path = Paths.get(p);
 
 		// List<Path> list = ScanFolderUtil.getLastModifiedSorted(path);
 		// ScanFolderUtil.getFiles(p, true);
-		
-//		String fileNameStart = "AppTest.groovy";
+
+		// String fileNameStart = "AppTest.groovy";
 		String fileNameStart = "ItemProcessor";
 
 		System.out.println("Start...");
@@ -41,7 +65,7 @@ public class ScanUtilTest {
 		System.out.println("found :#" + list.size());
 		System.out.println("Listing...");
 		list.forEach(x -> {
-//			if (x.getFileName().startsWith("ItemProcessor"))
+			// if (x.getFileName().startsWith("ItemProcessor"))
 			System.out.println(x);
 
 		});

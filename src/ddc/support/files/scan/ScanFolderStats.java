@@ -1,5 +1,8 @@
 package ddc.support.files.scan;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import ddc.support.util.Chronometer;
 
 public class ScanFolderStats {
@@ -13,6 +16,19 @@ public class ScanFolderStats {
 	private String sizeProcessed = "0";
 	private float throughput = 0;
 	private int currentDeepLevel = 0;
+	private List<String> exceptions = new ArrayList<>();
+
+	public List<String> getExceptions() {
+		return exceptions;
+	}
+
+	public void setExceptions(List<String> exceptions) {
+		this.exceptions = exceptions;
+	}
+
+	public int getExceptionCounter() {
+		return exceptions.size();
+	}
 
 	public Chronometer getChron() {
 		return chron;
@@ -137,6 +153,24 @@ public class ScanFolderStats {
 	public void setFolderProcessed(long folderProcessed) {
 		this.folderProcessed = folderProcessed;
 	}
-	
+
+	@Override
+	public String toString() {
+		String s = "elapsed:[" + this.chron.toString() + "]";
+		s += " fileScanned:[" + fileScanned + "]";
+		s += " fileProcessed:[" + fileProcessed + "]";
+		s += " bytesProcessed:[" + bytesProcessed + "]";
+		s += " folderScanned:[" + folderScanned + "]";
+		s += " folderProcessed:[" + folderProcessed + "]";
+		s += " throughputSize:[" + throughputSize + "]";
+		s += " sizeProcessed:[" + sizeProcessed + "]";
+		s += " throughput:[" + throughput + "]";
+		s += " currentDeepLevel:[" + currentDeepLevel + "]";
+		s += " exceptions:";
+		for (String item : exceptions) {
+			s += " [" + item + "]";
+		}
+		return s;
+	}
 
 }

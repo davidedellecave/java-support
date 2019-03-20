@@ -8,6 +8,7 @@ public class ScanFolderConfig {
 	private long sleepMillis = 10;
 //	private IOFileFilter dirFilter = TrueFileFilter.TRUE;
 //	private IOFileFilter fileFilter = TrueFileFilter.TRUE;
+	private boolean continueToHandleFileOnError = false;
 	private boolean zipEnabled = false;
 
 	public Path getRootFolder() {
@@ -34,21 +35,15 @@ public class ScanFolderConfig {
 		this.sleepMillis = sleepMillis;
 	}
 
-//	public IOFileFilter getDirFilter() {
-//		return dirFilter;
-//	}
-//
-//	public void setDirFilter(IOFileFilter dirFilter) {
-//		this.dirFilter = dirFilter;
-//	}
-//
-//	public IOFileFilter getFileFilter() {
-//		return fileFilter;
-//	}
-//
-//	public void setFileFilter(IOFileFilter fileFilter) {
-//		this.fileFilter = fileFilter;
-//	}
+
+	public boolean isContinueToHandleFileOnError() {
+		return continueToHandleFileOnError;
+	}
+
+	public void setContinueToHandleFileOnError(boolean continueToHandleFileOnError) {
+		this.continueToHandleFileOnError = continueToHandleFileOnError;
+	}
+
 	public boolean isZipEnabled() {
 		return zipEnabled;
 	}

@@ -35,6 +35,7 @@ ddc/support/jdbc/SqlConnectionUtils.class
 ddc/support/files/scan/ScanFolderUtil$3.class
 ddc/support/util/FieldType.class
 ddc/support/jdbc/BaseSqlTransformer.class
+ddc/support/jack/JackUtil$1.class
 ddc/support/util/ShellExecute$1.class
 ddc/support/task/TaskExitCode.class
 ddc/support/jdbc/JdbcConfig.class
@@ -42,6 +43,7 @@ ddc/support/files/scan/ScanFolderUtil$6.class
 ddc/support/xml/LiteXmlException.class
 ddc/support/util/LiteCache.class
 ddc/support/jdbc/SqlUtils$1.class
+ddc/support/files/FileRecord.class
 ddc/support/util/FilePair.class
 ddc/support/util/StringInputStream.class
 ddc/support/files/scan/ScanFolderUtil$5.class
@@ -58,8 +60,10 @@ ddc/support/util/StringOutputStream.class
 ddc/support/util/StringUtil.class
 ddc/support/jdbc/SqlRowHandler.class
 ddc/support/util/ZipUtils.class
+ddc/support/files/FileDb.class
 ddc/support/jdbc/db/SqlTypeMap.class
 ddc/support/jdbc/schema/LiteDbTable.class
+ddc/support/files/scan/ScanFolderUtil$ScanUtilResult.class
 ddc/support/files/scan/ScanFolderHandlerFile.class
 ddc/support/jdbc/SqlUtils.class
 ddc/support/xml/LiteXPath.class
@@ -74,6 +78,7 @@ ddc/support/util/Fields.class
 ddc/support/util/DRange.class
 ddc/support/jdbc/db/MsSqlFactory.class
 ddc/support/crypto/TokenException.class
+ddc/support/files/scan/ScanFolderUtil$7.class
 ddc/support/files/scan/ScanFolderUtil$4.class
 ddc/support/jdbc/schema/LiteDb.class
 ddc/support/jdbc/schema/LiteRow.class

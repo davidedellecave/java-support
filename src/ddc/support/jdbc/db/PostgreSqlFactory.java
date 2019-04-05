@@ -2,6 +2,7 @@ package ddc.support.jdbc.db;
 
 import ddc.support.jdbc.JdbcConfig;
 import ddc.support.jdbc.JdbcConnectionFactory;
+import ddc.support.jdbc.schema.LiteDbSchemaBuilder;
 
 public class PostgreSqlFactory extends JdbcConnectionFactory {
 
@@ -35,5 +36,10 @@ public class PostgreSqlFactory extends JdbcConnectionFactory {
 	@Override
 	public SqlTypeMap getSqlTypeMap() {
 		return map;
+	}
+	
+	@Override
+	public LiteDbSchemaBuilder getSchemaBuilder() {
+		return null;
 	}
 }

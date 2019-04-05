@@ -71,7 +71,7 @@ public class Timespan {
     
 	public static String getHumanReadable(long millis) {
 		if (millis < 0) {
-			throw new IllegalArgumentException("Duration must be greater than zero!");
+			return String.valueOf(millis);
 		}
 		return DurationFormatUtils.formatDurationHMS(millis);
 //		long days = TimeUnit.MILLISECONDS.toDays(millis);

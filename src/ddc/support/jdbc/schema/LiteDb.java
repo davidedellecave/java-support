@@ -8,6 +8,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
+
 import ddc.support.jdbc.JdbcConnectionFactory;
 
 public class LiteDb {
@@ -17,29 +19,51 @@ public class LiteDb {
 	private final static String[] TABLE_TYPES = { "TABLE", "VIEW" };
 	private String databaseName = "";
 	private List<LiteDbCatalog> catalogs = new ArrayList<LiteDbCatalog>();
+	private LiteDbSchemaBuilder schemaBuilder = null;
 
-	private LiteDb(String databaseName) {
-		this.databaseName = databaseName;
+	public LiteDb() {
 	}
 
-	public static LiteDb build(JdbcConnectionFactory connectionFactory) throws SQLException, ClassNotFoundException {
+	public LiteDb(LiteDbSchemaBuilder schemaBuilder) {
+		this.schemaBuilder=schemaBuilder;
+	}
+
+	public void build(JdbcConnectionFactory connectionFactory) throws Exception {		
+		doBuild(connectionFactory, null, null);
+	}
+
+	public void build(JdbcConnectionFactory connectionFactory, String schema) throws Exception {
+		doBuild(connectionFactory, schema, null);
+
+	}
+
+	public void build(JdbcConnectionFactory connectionFactory, String schema, String table) throws Exception {
+		doBuild(connectionFactory, schema, table);
+	}
+
+	private void doBuild(JdbcConnectionFactory connectionFactory, String schema, String table) throws Exception {
 		Connection conn = null;
 		try {
 			conn = connectionFactory.createConnection();
-			return build(connectionFactory.getDatabase(), conn);
+			this.databaseName=connectionFactory.getDatabase();
+			if (schemaBuilder == null) {
+				doBuildAll(conn);
+			} else {
+				schemaBuilder.build(this, conn, schema, table);
+			}
 		} finally {
 			JdbcConnectionFactory.close(conn);
 		}
 	}
 
-	private static LiteDb build(String databaseName, Connection connection) throws SQLException {
-		LiteDb liteDb = new LiteDb(databaseName);
+	private void doBuildAll(Connection connection) throws SQLException {
 		DatabaseMetaData meta = connection.getMetaData();
+
 		ResultSet rsCatalogs = meta.getCatalogs();
 		while (rsCatalogs.next()) {
 			String catalogName = rsCatalogs.getString("TABLE_CAT");
-			LiteDbCatalog liteCatalog = new LiteDbCatalog(catalogName, liteDb);
-			liteDb.getCatalogs().add(liteCatalog);
+			LiteDbCatalog liteCatalog = new LiteDbCatalog(catalogName, this);
+			catalogs.add(liteCatalog);
 			//
 			ResultSet rsSchema = meta.getSchemas();
 			while (rsSchema.next()) {
@@ -77,7 +101,36 @@ public class LiteDb {
 				}
 			}
 		}
-		return liteDb;
+	}
+
+	public LiteDbCatalog findCatalog(String catalogName) {
+		for (LiteDbCatalog c : catalogs) {
+			if (c.getCatalogName().equalsIgnoreCase(catalogName))
+				return c;
+		}
+		return null;
+	}
+
+	public LiteDbSchema findSchema(String catalogName, String schemaName) {
+		LiteDbCatalog c = findCatalog(catalogName);
+		if (c != null) {
+			for (LiteDbSchema s : c.getSchemas()) {
+				if (s.getSchemaName().equalsIgnoreCase(schemaName))
+					return s;
+			}
+		}
+		return null;
+	}
+
+	public LiteDbTable findTable(String catalogName, String schemaName, String tableName) {
+		LiteDbSchema s = findSchema(catalogName, schemaName);
+		if (s != null) {
+			for (LiteDbTable t : s.getTables()) {
+				if (t.getTableName().equalsIgnoreCase(tableName))
+					return t;
+			}
+		}
+		return null;
 	}
 
 	public List<LiteDbTable> findByCol(String name) {
@@ -99,7 +152,11 @@ public class LiteDb {
 	}
 
 	public List<LiteDbTable> findByTable(String name) {
-		name = name.toLowerCase();
+		name=name.toLowerCase();
+		//remove the schema from table name
+		if (name.contains(".")) {
+			name = StringUtils.substringAfter(name,".");
+		}
 		List<LiteDbTable> list = new ArrayList<>();
 		for (LiteDbCatalog c : catalogs) {
 			for (LiteDbSchema s : c.getSchemas()) {

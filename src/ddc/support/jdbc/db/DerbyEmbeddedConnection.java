@@ -2,6 +2,7 @@ package ddc.support.jdbc.db;
 
 import ddc.support.jdbc.JdbcConfig;
 import ddc.support.jdbc.JdbcConnectionFactory;
+import ddc.support.jdbc.schema.LiteDbSchemaBuilder;
 
 /**
  * @author davidedc 2014
@@ -37,6 +38,11 @@ public class DerbyEmbeddedConnection extends JdbcConnectionFactory {
 
 	@Override
 	public SqlTypeMap getSqlTypeMap() {
+		return null;
+	}
+	
+	@Override
+	public LiteDbSchemaBuilder getSchemaBuilder() {
 		return null;
 	}
 

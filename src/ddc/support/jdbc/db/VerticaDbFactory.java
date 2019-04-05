@@ -2,6 +2,7 @@ package ddc.support.jdbc.db;
 
 import ddc.support.jdbc.JdbcConfig;
 import ddc.support.jdbc.JdbcConnectionFactory;
+import ddc.support.jdbc.schema.LiteDbSchemaBuilder;
 
 public class VerticaDbFactory extends JdbcConnectionFactory {
 
@@ -54,5 +55,10 @@ public class VerticaDbFactory extends JdbcConnectionFactory {
 	@Override
 	public SqlTypeMap getSqlTypeMap() {
 		return map;
+	}
+	
+	@Override
+	public LiteDbSchemaBuilder getSchemaBuilder() {
+		return null;
 	}
 }

@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 import ddc.support.jdbc.db.SqlTypeMap;
+import ddc.support.jdbc.schema.LiteDbSchemaBuilder;
 import ddc.support.util.Chronometer;
 
 public abstract class JdbcConnectionFactory {
@@ -28,6 +29,8 @@ public abstract class JdbcConnectionFactory {
 	public abstract String getSqlLimitTemplate();
 
 	public abstract SqlTypeMap getSqlTypeMap();
+	
+	public abstract LiteDbSchemaBuilder getSchemaBuilder();
 
 	public String getHost() {
 		return conf.getHost();
@@ -155,6 +158,8 @@ public abstract class JdbcConnectionFactory {
 		if (connection != null) {
 			try {
 				if (!connection.isClosed()) {
+					if (!connection.getAutoCommit()) 
+						connection.commit();
 					connection.close();
 				}
 			} catch (SQLException e) {

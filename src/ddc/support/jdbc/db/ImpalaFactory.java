@@ -2,6 +2,7 @@ package ddc.support.jdbc.db;
 
 import ddc.support.jdbc.JdbcConfig;
 import ddc.support.jdbc.JdbcConnectionFactory;
+import ddc.support.jdbc.schema.LiteDbSchemaBuilder;
 
 public class ImpalaFactory extends JdbcConnectionFactory {
 
@@ -36,5 +37,9 @@ public class ImpalaFactory extends JdbcConnectionFactory {
 		return map;
 	}
 	
+	@Override
+	public LiteDbSchemaBuilder getSchemaBuilder() {
+		return null;
+	}
 
 }

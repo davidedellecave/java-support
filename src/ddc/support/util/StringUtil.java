@@ -105,6 +105,18 @@ public class StringUtil {
 		return out.toString();
 	}
 
+	public static String removeChar(final CharSequence cs, int asciiStart, int asciiEnd) {
+		if (cs == null || cs.length() == 0)
+			return "";
+		StringBuilder out = new StringBuilder(cs.length());
+		for (int i = 0; i < cs.length(); i++) {
+			char ch = cs.charAt(i);
+			if (ch >= asciiStart && ch<=asciiEnd)
+				out.append(ch);
+		}
+		return out.toString();
+	}
+	
 	public static String[] splitByChunk(String s, int chunkSize) {
 		int chunkCount = (s.length() / chunkSize) + (s.length() % chunkSize == 0 ? 0 : 1);
 		String[] returnVal = new String[chunkCount];

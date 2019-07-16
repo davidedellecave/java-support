@@ -40,11 +40,14 @@ public class TextFile {
 		} else {
 			Files.write(path, text.getBytes(), APPEND);	
 		}
-		
 	}
 	
 	public static void append(String path, String text) throws UnsupportedEncodingException, IOException {
 		append(Paths.get(path), text); 
+	}
+	
+	public static void write(Path path, Iterable<? extends CharSequence> lines) throws IOException {
+		Files.write(path, lines, StandardCharsets.UTF_8);
 	}
 
 	public static String load(String path) throws UnsupportedEncodingException, IOException {
@@ -52,7 +55,7 @@ public class TextFile {
 	}
 
 	public static String load(Path path) throws UnsupportedEncodingException, IOException {
-		return new String(Files.readAllBytes(path), "UTF-8");
+		return new String(Files.readAllBytes(path), StandardCharsets.UTF_8);
 	}
 	
 	public static List<String> loadLines(Path path) throws UnsupportedEncodingException, IOException {

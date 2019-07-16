@@ -1,9 +1,7 @@
 package ddc.support.crypto;
 
-import static ddc.support.util.DateUtil.toZonedDateTime;
-
 import java.security.NoSuchAlgorithmException;
-import java.time.ZonedDateTime;
+import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.concurrent.TimeUnit;
 
@@ -32,8 +30,9 @@ public class Token {
 		String[] toks = result.data.split(" ");
 		long millis = Long.valueOf(toks[toks.length-1]);		  
 //		DateTime dt = new DateTime(millis);
-		ZonedDateTime dt = toZonedDateTime(millis);
-		if (dt.plus(validity.getMillis(), ChronoUnit.MILLIS).isBefore(ZonedDateTime.now()))		
+//		ZonedDateTime dt = toZonedDateTime(millis);
+		Instant i = Instant.ofEpochMilli(millis);
+		if (i.plus(validity.getMillis(), ChronoUnit.MILLIS).isBefore(Instant.now()))		
 			throw new TokenException("Token - token expired");		
 		return toks;
 	}

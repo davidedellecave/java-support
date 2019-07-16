@@ -248,6 +248,11 @@ public class FileUtil {
 		}
 		return new File(path, newName);
 	}
+	
+	public static Path renameFile(Path path, String newName, boolean preserveExtension) {
+		File file = renameFile(path.toFile(), newName, preserveExtension);
+		return file.toPath();				
+	}
 
 	public static File renameFileExtension(File file, String extension) {
 		String name = getFilenameWhithoutExtension(file);

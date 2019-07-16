@@ -4,10 +4,12 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.time.LocalDate;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -33,6 +35,7 @@ public class DateUtil {
 	}
 
 	public static String DATE_PATTERN_ISO = "yyyy-MM-dd HH:mm:ss";
+	public static String DATE_PATTERN_YMD = "yyyy-MM-dd";
 	private static SimpleDateFormat dateISOFormatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 	private static SimpleDateFormat dateHumanReadableFormatter = new SimpleDateFormat("dd MMMM yyyy HH:mm:ss");
 	private static SimpleDateFormat dateFormatterForFile = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss");
@@ -98,32 +101,6 @@ public class DateUtil {
 		throw exception;
 	}
 
-	// public static LocalDate parseToLocalDate(String date, String[] fromPattern)
-	// throws DateTimeParseException {
-	// DateTimeParseException exception = null;
-	// for (String pattern : fromPattern) {
-	// try {
-	// return parseToLocalDate(date, pattern);
-	// } catch (DateTimeParseException e) {
-	// exception = e;
-	// }
-	// }
-	// throw exception;
-	// }
-
-	// public static ZonedDateTime parseToZonedDateTime(String date, String[]
-	// fromPattern, Locale locale) throws DateTimeParseException {
-	// DateTimeParseException exception = null;
-	// for (String pattern : fromPattern) {
-	// try {
-	// return parseToZonedDateTime(date, pattern, locale);
-	// } catch (DateTimeParseException e) {
-	// exception = e;
-	// }
-	// }
-	// throw exception;
-	// }
-
 	private static String parseToString(String formattedDate, String fromPattern, String toPattern) throws ParseException {
 		SimpleDateFormat formatter = new SimpleDateFormat(fromPattern);
 		java.util.Date fromDate = formatter.parse(formattedDate);
@@ -131,35 +108,40 @@ public class DateUtil {
 		return formatter.format(fromDate);
 	}
 
-	// private static LocalDate parseToLocalDate(String formattedDate, String
-	// fromPattern) {
-	// return LocalDate.parse(formattedDate,
-	// DateTimeFormatter.ofPattern(fromPattern));
-	// }
+	public static ZoneId ZONE_ROME = ZoneId.of("Europe/Rome");
+	public static ZoneId ZONE_UTC = ZoneOffset.UTC;
 
-	// private static ZonedDateTime parseToZonedDateTime(String formattedDate,
-	// String fromPattern, Locale locale) {
-	// return ZonedDateTime.parse(formattedDate,
-	// DateTimeFormatter.ofPattern(fromPattern, locale));
-	// }
-
-	// ---------------- conversion
-	// (1) LocalDateTime << Instant<< Date
-	public static LocalDateTime DateToLocalDateTime(Date date) {
-		Instant instant = Instant.ofEpochMilli(date.getTime());
-		LocalDateTime ldt = LocalDateTime.ofInstant(instant, ZoneOffset.UTC);
-		return ldt;
+	public static ZonedDateTime fromLocalToRome(LocalDateTime local) {
+		return local.atZone(ZONE_ROME);
 	}
 
-	// (2)Date<<Instant<<LocalDateTime
-	public static Date LocalDateTimeToDate(LocalDateTime ldt) {
-		Instant instant = ldt.toInstant(ZoneOffset.UTC);
-		Date date = Date.from(instant);
-		return date;
+	public static ZonedDateTime fromRomeToUTC(ZonedDateTime zoned) {
+		// from epoch
+		Instant istant = zoned.toInstant();
+		return istant.atZone(ZoneOffset.UTC);
 	}
-	
-	
+
+	public static ZonedDateTime fromUTCToRome(ZonedDateTime zoned) {
+		// from epoch
+		Instant istant = zoned.toInstant();
+		return istant.atZone(ZONE_ROME);
+	}
+
 	// ---------------- format
+	public static String format(LocalDate date, String pattern) {
+		// "yyyy-MM-dd HH:mm:ss"
+		return date.format(DateTimeFormatter.ofPattern(pattern));
+	}
+	
+	public static String format(LocalDateTime date, String pattern) {
+		// "yyyy-MM-dd HH:mm:ss"
+		return date.format(DateTimeFormatter.ofPattern(pattern));
+	}
+
+	public static String format(ZonedDateTime date, String pattern) {
+		// "yyyy-MM-dd HH:mm:ss"
+		return date.format(DateTimeFormatter.ofPattern(pattern));
+	}
 
 	public static String format(long timestamp, String pattern) {
 		Date d = new Date(timestamp);
@@ -236,12 +218,23 @@ public class DateUtil {
 	}
 
 	// ---------------- Create
+	public static Date create(int year, int monthZeroBased, int day) {
+		GregorianCalendar c = new GregorianCalendar(year, monthZeroBased, day);
+		return c.getTime();
+	}
 
+	public static Date create(int year, int monthZeroBased, int day, int hour, int minute, int second) {
+		GregorianCalendar c = new GregorianCalendar(year, monthZeroBased, day, hour, minute, second);
+		return c.getTime();
+	}
+
+	@Deprecated
 	public static Date create(int year, Month month, int day) {
 		GregorianCalendar c = new GregorianCalendar(year, month.getMonthValue(), day, 0, 0, 0);
 		return c.getTime();
 	}
 
+	@Deprecated
 	public static Date create(int year, Month month, int day, int hour, int minute, int second) {
 		GregorianCalendar c = new GregorianCalendar(year, month.getMonthValue(), day, hour, minute, second);
 		return c.getTime();
@@ -266,11 +259,31 @@ public class DateUtil {
 	public static Instant toInstant(Date date) {
 		return date.toInstant();
 	}
-
-	public static LocalDate toLocalDate(Instant instant) {
-		return LocalDate.from(instant);
-	}
 	
+	public static Instant toInstant(LocalDate date) {
+		return date.atStartOfDay(ZoneId.systemDefault()).toInstant();
+	}
+
+	public static ZonedDateTime toUTC(Instant instant) {
+		return ZonedDateTime.ofInstant(instant, ZONE_UTC);
+	}
+
+	public static ZonedDateTime toUTC(long millis) {
+		return ZonedDateTime.ofInstant(Instant.ofEpochMilli(millis), ZONE_UTC);
+	}
+
+	public static ZonedDateTime toRome(Instant instant) {
+		return ZonedDateTime.ofInstant(instant, ZONE_ROME);
+	}
+
+	public static ZonedDateTime toRome(long millis) {
+		return ZonedDateTime.ofInstant(Instant.ofEpochMilli(millis), ZONE_ROME);
+	}
+
+	public static LocalDateTime toLocal(ZonedDateTime zoned) {
+		return zoned.toLocalDateTime();
+	}
+
 	public static Date toDate(Instant instant) {
 		return Date.from(instant);
 	}
@@ -287,18 +300,20 @@ public class DateUtil {
 		return dt.isBefore(ZonedDateTime.now());
 	}
 
-	public static ZonedDateTime Now() {
-		return ZonedDateTime.now();
+	// public static ZonedDateTime nowZoned() {
+	// return ZonedDateTime.now();
+	// }
+
+	public static LocalDateTime now() {
+		return LocalDateTime.now();
 	}
 
-	public static ZonedDateTime toZonedDateTime(long millis) {
-		Instant i = Instant.ofEpochMilli(millis);
-		return i.atZone(ZoneId.systemDefault());
-	}
-
-	public static long toMillis(LocalDateTime ldt) {
-		Instant instant = ldt.toInstant(ZoneOffset.UTC);
-		return instant.toEpochMilli();
-	}
+	// Instant objects are by default in UTC time zone.
+	// Printing the value of timestamp gives us 2016-11-29T14:23:25.551Z. ‘Z’ here
+	// denotes the UTC+00:00 time zone.
+	// public static long toMillis(LocalDateTime ldt) {
+	// Instant instant = ldt.toInstant(ZoneOffset.UTC);
+	// return instant.toEpochMilli();
+	// }
 
 }

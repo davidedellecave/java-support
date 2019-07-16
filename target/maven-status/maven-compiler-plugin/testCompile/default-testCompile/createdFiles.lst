@@ -1,8 +1,0 @@
-ddc/support/util/ZipUtilsTest.class
-ddc/support/jdbc/db/MySqlFactoryTest.class
-ddc/support/util/ChronometerTest.class
-ddc/support/util/DateUtilTest.class
-ddc/support/xml/LiteXmlTest.class
-ddc/support/files/scan/ScanUtilTest.class
-ddc/support/jdbc/schema/LiteDbTest.class
-ddc/support/jdbc/db/MsSqlFactoryTest.class

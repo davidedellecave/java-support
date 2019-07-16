@@ -8,6 +8,7 @@
 /Users/davide/git/java-support/src/ddc/support/task/TaskExitCode.java
 /Users/davide/git/java-support/src/ddc/support/util/BTreeListener.java
 /Users/davide/git/java-support/src/ddc/support/files/FileRecord.java
+/Users/davide/git/java-support/src/ddc/support/util/ListEx.java
 /Users/davide/git/java-support/src/ddc/support/xml/LiteXmlUtil.java
 /Users/davide/git/java-support/src/ddc/support/crypto/AESCryptoConfig.java
 /Users/davide/git/java-support/src/ddc/support/xml/LiteXmlDocument.java
@@ -41,16 +42,20 @@
 /Users/davide/git/java-support/src/ddc/support/jdbc/schema/LiteDbSchema.java
 /Users/davide/git/java-support/src/ddc/support/crypto/Token.java
 /Users/davide/git/java-support/src/ddc/support/jdbc/schema/LiteTable.java
+/Users/davide/git/java-support/src/ddc/support/jdbc/db/Db2Factory.java
 /Users/davide/git/java-support/src/ddc/support/util/LiteCache.java
 /Users/davide/git/java-support/src/ddc/support/util/Clone.java
 /Users/davide/git/java-support/src/ddc/support/util/DateUtil.java
 /Users/davide/git/java-support/src/ddc/support/jdbc/db/ImpalaSqlTypeMap.java
+/Users/davide/git/java-support/src/ddc/support/pki/PkiCrypto.java
 /Users/davide/git/java-support/src/ddc/support/task/TaskStatus.java
+/Users/davide/git/java-support/src/ddc/support/util/ActionOnItem.java
 /Users/davide/git/java-support/src/ddc/support/util/FileLineWriter.java
 /Users/davide/git/java-support/src/ddc/support/jdbc/schema/LiteDbRecord.java
 /Users/davide/git/java-support/src/ddc/support/jdbc/schema/LiteDbCatalog.java
 /Users/davide/git/java-support/src/ddc/support/files/scan/ScanFolderConfig.java
 /Users/davide/git/java-support/src/ddc/support/util/Chronometer.java
+/Users/davide/git/java-support/src/ddc/support/jdbc/schema/LiteDbSchemaBuilder.java
 /Users/davide/git/java-support/src/ddc/support/files/scan/ScanFolderUtil.java
 /Users/davide/git/java-support/src/ddc/support/jdbc/schema/LiteDb.java
 /Users/davide/git/java-support/src/ddc/support/jdbc/SqlUtils.java
@@ -62,6 +67,7 @@
 /Users/davide/git/java-support/src/ddc/support/util/StringInputStream.java
 /Users/davide/git/java-support/src/ddc/support/util/ErrorItem.java
 /Users/davide/git/java-support/src/ddc/support/jdbc/db/OracleFactory.java
+/Users/davide/git/java-support/src/ddc/support/jdbc/db/Db2SchemaBuilder.java
 /Users/davide/git/java-support/src/ddc/support/util/KeyResolver.java
 /Users/davide/git/java-support/src/ddc/support/files/scan/ScanFolderHandlerFile.java
 /Users/davide/git/java-support/src/ddc/support/util/FormatUtils.java
@@ -87,6 +93,7 @@
 /Users/davide/git/java-support/src/ddc/support/util/LogConsole.java
 /Users/davide/git/java-support/src/ddc/support/jdbc/SqlConnectionUtils.java
 /Users/davide/git/java-support/src/ddc/support/files/scan/ScanFolderHandler.java
+/Users/davide/git/java-support/src/ddc/support/jdbc/db/Db2SqlTypeMap.java
 /Users/davide/git/java-support/src/ddc/support/util/CsvUtil.java
 /Users/davide/git/java-support/src/ddc/support/util/ArrayField.java
 /Users/davide/git/java-support/src/ddc/support/util/LineWriter.java
@@ -95,6 +102,7 @@
 /Users/davide/git/java-support/src/ddc/support/util/ShellExecute.java
 /Users/davide/git/java-support/src/ddc/support/xml/LiteXmlException.java
 /Users/davide/git/java-support/src/ddc/support/files/scan/BaseScanFolderHandler.java
+/Users/davide/git/java-support/src/ddc/support/pki/PkiGenerateKeys.java
 /Users/davide/git/java-support/src/ddc/support/jdbc/BaseSqlTransformer.java
 /Users/davide/git/java-support/src/ddc/support/files/scan/DefaultScanFolderHandler.java
 /Users/davide/git/java-support/src/ddc/support/util/LogListener.java
@@ -104,7 +112,6 @@
 /Users/davide/git/java-support/src/ddc/support/jdbc/JdbcConfig.java
 /Users/davide/git/java-support/src/ddc/support/task/TaskInstance.java
 /Users/davide/git/java-support/src/ddc/support/util/FileUtil.java
-/Users/davide/git/java-support/src/ddc/support/jdbc/db/Db2Connection.java
 /Users/davide/git/java-support/src/ddc/support/jack/JackUtil.java
 /Users/davide/git/java-support/src/ddc/support/util/StringUtil.java
 /Users/davide/git/java-support/src/ddc/support/jdbc/schema/LiteRow.java

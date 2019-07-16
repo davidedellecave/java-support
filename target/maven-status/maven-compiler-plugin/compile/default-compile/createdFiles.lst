@@ -18,7 +18,6 @@ ddc/support/jdbc/db/PostreSqlTypeMap.class
 ddc/support/crypto/CryptoConfig$CipherMode.class
 ddc/support/crypto/CryptoResult.class
 ddc/support/util/SetUtils.class
-ddc/support/jdbc/db/Db2Connection.class
 ddc/support/task/TaskInfo.class
 ddc/support/util/DateRange2.class
 ddc/support/jdbc/db/VerticaSqlTypeMap.class

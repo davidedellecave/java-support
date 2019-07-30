@@ -4,7 +4,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.time.LocalDate;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZoneOffset;
@@ -260,9 +259,7 @@ public class DateUtil {
 		return date.toInstant();
 	}
 	
-	public static Instant toInstant(LocalDate date) {
-		return date.atStartOfDay(ZoneId.systemDefault()).toInstant();
-	}
+
 
 	public static ZonedDateTime toUTC(Instant instant) {
 		return ZonedDateTime.ofInstant(instant, ZONE_UTC);
@@ -291,7 +288,24 @@ public class DateUtil {
 	public static long toMillis(Instant instant) {
 		return instant.toEpochMilli();
 	}
+	
+	public static long toMillis(LocalDateTime ldt) {
+		ZonedDateTime zdt = ldt.atZone(ZoneId.systemDefault());
+		return zdt.toInstant().toEpochMilli();
+	}
+	
+	public static Instant toInstant(LocalDateTime ldt) {
+		return ldt.atZone(ZoneId.systemDefault()).toInstant();
+	}
 
+	public static Instant toInstant(LocalDate date) {
+		return date.atStartOfDay(ZoneId.systemDefault()).toInstant();
+	}
+
+	public static long toMillis(LocalDate ld) {
+		return ld.atStartOfDay(ZoneId.systemDefault()).toInstant().toEpochMilli();
+	}
+	
 	public static Instant toInstant(long millis) {
 		return Instant.ofEpochMilli(millis);
 	}
@@ -300,20 +314,12 @@ public class DateUtil {
 		return dt.isBefore(ZonedDateTime.now());
 	}
 
-	// public static ZonedDateTime nowZoned() {
-	// return ZonedDateTime.now();
-	// }
-
 	public static LocalDateTime now() {
 		return LocalDateTime.now();
 	}
 
-	// Instant objects are by default in UTC time zone.
-	// Printing the value of timestamp gives us 2016-11-29T14:23:25.551Z. ‘Z’ here
-	// denotes the UTC+00:00 time zone.
-	// public static long toMillis(LocalDateTime ldt) {
-	// Instant instant = ldt.toInstant(ZoneOffset.UTC);
-	// return instant.toEpochMilli();
-	// }
+	public static Date LocalDateToDate(LocalDate ld) {
+		return Date.from(toInstant(ld));
+	}
 
 }

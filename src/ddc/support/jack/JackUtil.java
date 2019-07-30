@@ -34,7 +34,7 @@ public class JackUtil {
 	// .withCreatorVisibility(JsonAutoDetect.Visibility.NONE));
 	// }
 
-	public static String toPrettified(Object obj) throws JsonGenerationException, JsonMappingException, IOException {
+	public static String toPrettifiedString(Object obj) throws JsonGenerationException, JsonMappingException, IOException {
 		return (mapper.writerWithDefaultPrettyPrinter()).writeValueAsString(obj);
 	}
 
@@ -154,6 +154,8 @@ public class JackUtil {
 				break;
 			case BOOLEAN:
 				valueNode = BooleanNode.valueOf(incomingValueNode.booleanValue());
+			default:
+				break;
 			}
 			if (valueNode != null) {
 				updateObject(mergedInTo, valueNode, incomingEntry);

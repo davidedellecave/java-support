@@ -1,5 +1,6 @@
 package ddc.support.util;
 
+import java.time.Duration;
 import java.util.Date;
 import java.util.concurrent.Callable;
 import java.util.concurrent.TimeUnit;
@@ -169,6 +170,10 @@ public class Chronometer {
 		return endTime;
 	}
 
+	public static void sleep(Duration duration) {
+		sleep(duration.toMillis());
+	}
+	
 	public static void sleep(long millis) {
 		if (millis <= 0)
 			return;

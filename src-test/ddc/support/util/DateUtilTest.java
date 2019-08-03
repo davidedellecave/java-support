@@ -3,7 +3,6 @@ package ddc.support.util;
 import java.text.ParseException;
 import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
-import java.util.Date;
 
 import org.junit.Test;
 
@@ -20,7 +19,7 @@ public class DateUtilTest {
 	
 	@Test
 	public void testDuration() throws ParseException {
-		Date date = DateUtil.parseToDate("2016/12/06", "yyyy/MM/dd");
+//		Date date = DateUtil.parseToDate("2016/12/06", "yyyy/MM/dd");
 //		12/01/2017
 		
 		LocalDateTime local = LocalDateTime.now();

@@ -106,6 +106,14 @@ public class JackUtil {
 		}
 		return node.asBoolean();
 	}
+	
+	@SuppressWarnings("unchecked")
+	public static Map<String, Object> toMap(Object obj)  {
+		Map<String,Object> map = mapper.convertValue(obj, Map.class);
+		return map;
+
+	}
+	
 
 	public static void merge_to_be_tested(JsonNode toBeMerged, JsonNode mergedInTo) {
 		Iterator<Map.Entry<String, JsonNode>> incomingFieldsIterator = toBeMerged.fields();

@@ -1,6 +1,7 @@
 package ddc.support.util;
 
 import java.util.LinkedHashMap;
+import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -9,10 +10,18 @@ public class CsvUtil {
 		return StringUtils.join(map.keySet(), separator);
 	}
 	
-	public static String getLine(LinkedHashMap<String, String> map, char separator) {
+//	public static String getLine(LinkedHashMap<String, String> map, char separator) {
+//		return StringUtils.join(map.values(), separator);		
+//	}
+
+	public static String getLine(LinkedHashMap<String, Object> map, char separator) {
 		return StringUtils.join(map.values(), separator);		
 	}
-
+	
+	public static String getLine(Map<String, Object> map, char separator) {
+		return StringUtils.join(map.values(), separator);		
+	}
+	
 	public static String[] getHeader(String line, char separator) {
 		String[] toks = StringUtils.split(line, separator);
 		for (int i=0; i<toks.length; i++) {

@@ -7,7 +7,7 @@ public class TaskInstance {
 	private TaskInfo taskInfo = new TaskInfo();
 	private Class<? extends Task> clazz = null;
 	
-	private TaskInstance() {}
+	protected TaskInstance() {}
 	
 	public static TaskInstance create(Class<? extends Task> clazz, TaskContext context) throws InstantiationException, IllegalAccessException {
 		TaskInstance i = new TaskInstance();
@@ -21,7 +21,7 @@ public class TaskInstance {
 		return getTaskInfo().getUuid();
 	}
 	
-	public void start() {
+	public void setAsStarted() {
 		taskInfo.setAsStart();
 	}
 	

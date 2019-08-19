@@ -11,6 +11,7 @@
 		<jackson-core-ver>2.9.6</jackson-core-ver>
 		<jackson-jaxrs-version>2.9.6</jackson-jaxrs-version>
 		<log4j2.version>2.11.0</log4j2.version>
+        <jupiter.version>5.1.1</jupiter.version>		
 	</properties>
 	<repositories>
 		<repository>
@@ -26,6 +27,13 @@
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
 			<version>4.12</version>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.junit.jupiter</groupId>
+			<artifactId>junit-jupiter-api</artifactId>
+			<version>${jupiter.version}</version>
 			<scope>test</scope>
 		</dependency>
 

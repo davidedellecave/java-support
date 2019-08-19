@@ -2,6 +2,7 @@ package ddc.support.util;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.Duration;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -35,6 +36,7 @@ public class DateUtil {
 
 	public static String DATE_PATTERN_ISO = "yyyy-MM-dd HH:mm:ss";
 	public static String DATE_PATTERN_YMD = "yyyy-MM-dd";
+	public static String DATE_PATTERN_YM = "yyyy-MM";
 	private static SimpleDateFormat dateISOFormatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 	private static SimpleDateFormat dateHumanReadableFormatter = new SimpleDateFormat("dd MMMM yyyy HH:mm:ss");
 	private static SimpleDateFormat dateFormatterForFile = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss");
@@ -322,4 +324,7 @@ public class DateUtil {
 		return Date.from(toInstant(ld));
 	}
 
+	public static long diffToMillis(Instant t1, Instant t2) {
+		return Duration.between(t1, t2).toMillis();
+	}
 }

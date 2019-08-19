@@ -92,7 +92,7 @@ public class FileUtil {
 		long date = System.currentTimeMillis() - duration;
 		return (file.lastModified() >= date);
 	}
-	
+
 	public static boolean isNewerThan(Path file, long duration) throws IOException {
 		long date = System.currentTimeMillis() - duration;
 		return (Files.getLastModifiedTime(file).toMillis() >= date);
@@ -248,10 +248,10 @@ public class FileUtil {
 		}
 		return new File(path, newName);
 	}
-	
+
 	public static Path renameFile(Path path, String newName, boolean preserveExtension) {
 		File file = renameFile(path.toFile(), newName, preserveExtension);
-		return file.toPath();				
+		return file.toPath();
 	}
 
 	public static File renameFileExtension(File file, String extension) {
@@ -377,29 +377,29 @@ public class FileUtil {
 	// The number of bytes in a yottabyte.
 	public static final BigInteger ONE_YB = BigInteger.valueOf(ONE_KB).multiply(ONE_ZB);
 
-    public static String byteCountToDisplaySize(final long size) {
-        return byteCountToDisplaySize(BigInteger.valueOf(size));
-    }
-    
+	public static String byteCountToDisplaySize(final long size) {
+		return byteCountToDisplaySize(BigInteger.valueOf(size));
+	}
+
 	public static String byteCountToDisplaySize(final BigInteger size) {
 		String displaySize;
 
-        if (size.divide(ONE_EB_BI).compareTo(BigInteger.ZERO) > 0) {
-            displaySize = String.valueOf(size.divide(ONE_EB_BI)) + " EB";
-        } else if (size.divide(ONE_PB_BI).compareTo(BigInteger.ZERO) > 0) {
-            displaySize = String.valueOf(size.divide(ONE_PB_BI)) + " PB";
-        } else if (size.divide(ONE_TB_BI).compareTo(BigInteger.ZERO) > 0) {
-            displaySize = String.valueOf(size.divide(ONE_TB_BI)) + " TB";
-        } else if (size.divide(ONE_GB_BI).compareTo(BigInteger.ZERO) > 0) {
-            displaySize = String.valueOf(size.divide(ONE_GB_BI)) + " GB";
-        } else if (size.divide(ONE_MB_BI).compareTo(BigInteger.ZERO) > 0) {
-            displaySize = String.valueOf(size.divide(ONE_MB_BI)) + " MB";
-        } else if (size.divide(ONE_KB_BI).compareTo(BigInteger.ZERO) > 0) {
-            displaySize = String.valueOf(size.divide(ONE_KB_BI)) + " KB";
-        } else {
-            displaySize = String.valueOf(size) + " bytes";
-        }
-        return displaySize;
+		if (size.divide(ONE_EB_BI).compareTo(BigInteger.ZERO) > 0) {
+			displaySize = String.valueOf(size.divide(ONE_EB_BI)) + " EB";
+		} else if (size.divide(ONE_PB_BI).compareTo(BigInteger.ZERO) > 0) {
+			displaySize = String.valueOf(size.divide(ONE_PB_BI)) + " PB";
+		} else if (size.divide(ONE_TB_BI).compareTo(BigInteger.ZERO) > 0) {
+			displaySize = String.valueOf(size.divide(ONE_TB_BI)) + " TB";
+		} else if (size.divide(ONE_GB_BI).compareTo(BigInteger.ZERO) > 0) {
+			displaySize = String.valueOf(size.divide(ONE_GB_BI)) + " GB";
+		} else if (size.divide(ONE_MB_BI).compareTo(BigInteger.ZERO) > 0) {
+			displaySize = String.valueOf(size.divide(ONE_MB_BI)) + " MB";
+		} else if (size.divide(ONE_KB_BI).compareTo(BigInteger.ZERO) > 0) {
+			displaySize = String.valueOf(size.divide(ONE_KB_BI)) + " KB";
+		} else {
+			displaySize = String.valueOf(size) + " bytes";
+		}
+		return displaySize;
 	}
 
 	public static String getJarFolder(Object packageClass) {
@@ -457,4 +457,27 @@ public class FileUtil {
 		}
 		return propFile;
 	}
+
+//	public void watchFile(Path path, Callable<T> callback) {
+//		System.out.println(path);
+//		try (final WatchService watchService = FileSystems.getDefault().newWatchService()) {
+//			final WatchKey watchKey = path.register(watchService, StandardWatchEventKinds.ENTRY_MODIFY);
+//			while (true) {
+//				final WatchKey wk = watchService.take();
+//				for (WatchEvent<?> event : wk.pollEvents()) {
+//					// we only register "ENTRY_MODIFY" so the context is always a Path.
+//					final Path changed = (Path) event.context();
+//					System.out.println(changed);
+//					if (changed.endsWith("myFile.txt")) {
+//						System.out.println("My file has changed");
+//					}
+//				}
+//				// reset the key
+//				boolean valid = wk.reset();
+//				if (!valid) {
+//					System.out.println("Key has been unregisterede");
+//				}
+//			}
+//		}
+//	}
 }

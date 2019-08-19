@@ -15,10 +15,9 @@ public class ChronometerTest {
 		
 	}
 	
-	
 	private String aMethod(String echo) {
 		Chronometer.sleep(5000);
-		return " >" + echo;
+		return " > " + echo;
 	}
 
 }

@@ -171,6 +171,7 @@ public class Chronometer {
 	}
 
 	public static void sleep(Duration duration) {
+		if (duration.isZero()) return;
 		sleep(duration.toMillis());
 	}
 	

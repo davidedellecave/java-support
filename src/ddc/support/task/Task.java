@@ -3,6 +3,7 @@ package ddc.support.task;
 public abstract class Task implements Runnable {
 	private TaskContext context = null;	
 	
+	
 	@Override
 	public void run() {
 		try {

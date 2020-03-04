@@ -8,7 +8,7 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<jackson-core-ver>2.9.6</jackson-core-ver>
+		<jackson-core-ver>2.10.3</jackson-core-ver>
 		<jackson-jaxrs-version>2.9.6</jackson-jaxrs-version>
 		<log4j2.version>2.11.0</log4j2.version>
         <jupiter.version>5.1.1</jupiter.version>		

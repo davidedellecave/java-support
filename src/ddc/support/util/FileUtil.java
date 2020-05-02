@@ -142,9 +142,17 @@ public class FileUtil {
 			return false;
 		return isReadbleFolder(new File(folder));
 	}
+	
+	public static boolean isReadbleFolder(Path folder) {
+		if (folder == null)
+			return false;
+		return isReadbleFolder(folder.toFile());
+	}
 
 	public static boolean isReadbleFolder(File folder) {
 		if (folder == null)
+			return false;
+		if (!folder.isDirectory())
 			return false;
 		if (!folder.exists() || !folder.canRead())
 			return false;
@@ -202,7 +210,7 @@ public class FileUtil {
 		String newName = getFilenameWhithoutExtension(file.getName()) + suffix;
 		return renameFile(file, newName, true);
 	}
-
+	
 	public static FileName buildFileName(String path) {
 		FileName fn = new FileName();
 		String p = FilenameUtils.getFullPathNoEndSeparator(path);

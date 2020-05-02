@@ -1,5 +1,6 @@
 package ddc.support.util;
 
+import java.time.Duration;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -9,7 +10,7 @@ public class LiteCache {
 	public synchronized static Object get(String name) {
 		if (cache.containsKey(name)) {
 			CacheItem item = cache.get(name);
-			if (item.chron.isCountdownOver()) {
+			if (item.countdown.isOver()) {
 				cache.remove(name);
 				return null;
 			} else {
@@ -19,9 +20,26 @@ public class LiteCache {
 		return null;
 	}
 
-	public synchronized static void put(String name, Object obj, long evictionMillis) {
+	public synchronized static Object get(String name, Renewal renewal) throws Exception {
+		Object obj = null;
+		if (cache.containsKey(name)) {
+			CacheItem item = cache.get(name);
+			if (item.countdown.isOver()) {
+				cache.remove(name);
+			} else {
+				obj = item.obj;
+			}
+		}
+		if (obj == null) {
+			obj = renewal.renew();
+			put(name, obj, renewal.getEviction().toMillis());
+		}
+		return obj;
+	}
+
+	private synchronized static void put(String name, Object obj, long evictionMillis) {
 		CacheItem item = (new LiteCache()).new CacheItem();
-		item.chron = new Chronometer(evictionMillis);
+		item.countdown = new Countdown(evictionMillis);
 		item.obj = obj;
 		cache.put(name, item);
 	}
@@ -29,17 +47,22 @@ public class LiteCache {
 	public synchronized static boolean isEvicted(String name) {
 		if (cache.containsKey(name)) {
 			CacheItem item = cache.get(name);
-			return item.chron.isCountdownOver();
+			return item.countdown.isOver();
 		}
 		return true;
 	}
-	
+
 	public synchronized static void clear() {
 		cache.clear();
 	}
 
 	class CacheItem {
-		public Chronometer chron;
+		public Countdown countdown;
 		public Object obj;
+	}
+
+	public interface Renewal {
+		public Object renew() throws Exception;
+		public Duration getEviction() throws Exception;
 	}
 }

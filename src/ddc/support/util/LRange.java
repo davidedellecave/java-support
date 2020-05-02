@@ -17,6 +17,20 @@ public class LRange {
     public static LRange create(long lbound, long ubound) {
         return new LRange(lbound, ubound);
     }
+
+    /**
+     * Create range from value where lowerB substracting perc, and upperB adding perc
+     * @param pivot
+     * @param lboundPerc
+     * @param uboundPerc
+     * @return
+     */
+    public static LRange create(long pivot, double lboundPerc, double uboundPerc) {
+    	long lbound = (long)(pivot - pivot*lboundPerc/100);
+    	long ubound = (long)(pivot + pivot*lboundPerc/100);
+        return new LRange(lbound, ubound);
+    }
+    
     
     public long getLower() {
 		return lower;

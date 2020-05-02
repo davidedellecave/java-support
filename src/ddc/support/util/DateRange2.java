@@ -13,7 +13,27 @@ public class DateRange2 {
 		this.begin = begin == null ? LocalDate.MIN : begin;
 		this.end = end == null ? LocalDate.MAX : end;
 	}
+	
+	public DateRange2(Month month) {
+		this.begin = LocalDate.of(LocalDate.now().getYear(), month, 1);
+		this.end  = endDate(begin);
+	}
 
+	public DateRange2(Month month, int year) {
+		this.begin = LocalDate.of(year, month, 1);
+		this.end  = endDate(begin);
+	}
+	
+	public DateRange2(Month monthBegin, Month monthEnd) {
+		this.begin = LocalDate.of(LocalDate.now().getYear(), monthBegin, 1);
+		LocalDate date = LocalDate.of(begin.getYear(), monthEnd, 1);
+		this.end  = endDate(date);
+	}
+	
+	private LocalDate endDate(LocalDate date) {
+		return LocalDate.of(date.getYear(), date.getMonth(), date.getMonth().maxLength());
+	}
+	
 	public DateRange2(int startYear, Month startMonth, int startDay, int endYear, Month endMonth, int endDay) {
 		begin = LocalDate.of(startYear, startMonth, startDay);
 		end = LocalDate.of(endYear, endMonth, endDay);
@@ -32,6 +52,10 @@ public class DateRange2 {
 		return (begin.isBefore(date) || begin.isEqual(date)) && (end.isAfter(date) || end.isEqual(date));
 	}
 
+	public boolean contains(DateRange2 range) {
+		return (begin.isBefore(range.begin) || begin.isEqual(range.begin)) && (end.isAfter(range.end) || end.isEqual(range.end));
+	}
+	
 	public DateRange2 intersection(DateRange2 range) {
 		LocalDate maxLower = max(range.begin, begin);
 		LocalDate minUpper = min(range.end, end);

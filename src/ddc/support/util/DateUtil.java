@@ -12,27 +12,11 @@ import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.GregorianCalendar;
 
 /**
  * @author davidedc, 30/ott/2010
  */
 public class DateUtil {
-
-	@Deprecated
-	public enum Month {
-		January(0), February(1), March(2), April(3), May(4), June(5), July(6), August(7), September(8), October(9), November(10), December(11);
-
-		private final int month;
-
-		Month(int month) {
-			this.month = month;
-		}
-
-		int getMonthValue() {
-			return month;
-		}
-	}
 
 	public static String DATE_PATTERN_ISO = "yyyy-MM-dd HH:mm:ss";
 	public static String DATE_PATTERN_YMD = "yyyy-MM-dd";
@@ -219,37 +203,25 @@ public class DateUtil {
 	}
 
 	// ---------------- Create
-	public static Date create(int year, int monthZeroBased, int day) {
-		GregorianCalendar c = new GregorianCalendar(year, monthZeroBased, day);
-		return c.getTime();
-	}
+//	public static Date create(int year, int monthZeroBased, int day) {
+//		GregorianCalendar c = new GregorianCalendar(year, monthZeroBased, day);
+//		return c.getTime();
+//	}
+//
+//	public static Date create(int year, int monthZeroBased, int day, int hour, int minute, int second) {
+//		GregorianCalendar c = new GregorianCalendar(year, monthZeroBased, day, hour, minute, second);
+//		return c.getTime();
+//	}
 
-	public static Date create(int year, int monthZeroBased, int day, int hour, int minute, int second) {
-		GregorianCalendar c = new GregorianCalendar(year, monthZeroBased, day, hour, minute, second);
-		return c.getTime();
-	}
-
-	@Deprecated
-	public static Date create(int year, Month month, int day) {
-		GregorianCalendar c = new GregorianCalendar(year, month.getMonthValue(), day, 0, 0, 0);
-		return c.getTime();
-	}
-
-	@Deprecated
-	public static Date create(int year, Month month, int day, int hour, int minute, int second) {
-		GregorianCalendar c = new GregorianCalendar(year, month.getMonthValue(), day, hour, minute, second);
-		return c.getTime();
-	}
-
-	public static Date createStartDay(int year, Month month, int day) {
-		GregorianCalendar c = new GregorianCalendar(year, month.getMonthValue(), day, 0, 0, 0);
-		return c.getTime();
-	}
-
-	public static Date createEndDay(int year, Month month, int day) {
-		GregorianCalendar c = new GregorianCalendar(year, month.getMonthValue(), day, 23, 59, 59);
-		return c.getTime();
-	}
+//	public static Date createStartDay(int year, Month month, int day) {
+//		GregorianCalendar c = new GregorianCalendar(year, month.getMonthValue(), day, 0, 0, 0);
+//		return c.getTime();
+//	}
+//
+//	public static Date createEndDay(int year, java.time.Month month, int day) {
+//		GregorianCalendar c = new GregorianCalendar(year, month.getMonthValue(), day, 23, 59, 59);
+//		return c.getTime();
+//	}
 
 	private static long getHSMFromDateMillis(Date d) {
 		Calendar cal = Calendar.getInstance();
@@ -257,10 +229,10 @@ public class DateUtil {
 		return (cal.get(Calendar.HOUR_OF_DAY) * 60 * 60 + cal.get(Calendar.MINUTE) * 60 + cal.get(Calendar.SECOND)) * 1000;
 	}
 
-	public static Instant toInstant(Date date) {
-		return date.toInstant();
-	}
-	
+//	public static Instant toInstant(Date date) {
+//		return date.toInstant();
+//	}
+//	
 
 
 	public static ZonedDateTime toUTC(Instant instant) {
@@ -281,10 +253,6 @@ public class DateUtil {
 
 	public static LocalDateTime toLocal(ZonedDateTime zoned) {
 		return zoned.toLocalDateTime();
-	}
-
-	public static Date toDate(Instant instant) {
-		return Date.from(instant);
 	}
 
 	public static long toMillis(Instant instant) {

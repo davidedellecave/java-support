@@ -2,8 +2,6 @@ package ddc.support.util;
 
 import java.util.concurrent.TimeUnit;
 
-import org.apache.commons.lang3.time.DurationFormatUtils;
-
 public class Timespan {
 	private long millis = 0;
 
@@ -73,49 +71,52 @@ public class Timespan {
 		if (millis < 0) {
 			return String.valueOf(millis);
 		}
-		return DurationFormatUtils.formatDurationHMS(millis);
-//		long days = TimeUnit.MILLISECONDS.toDays(millis);
-//		millis -= TimeUnit.DAYS.toMillis(days);
-//
-//		long hours = TimeUnit.MILLISECONDS.toHours(millis);
-//		millis -= TimeUnit.HOURS.toMillis(hours);
-//
-//		long minutes = TimeUnit.MILLISECONDS.toMinutes(millis);
-//		millis -= TimeUnit.MINUTES.toMillis(minutes);
-//
-//		long seconds = TimeUnit.MILLISECONDS.toSeconds(millis);
-//		millis -= TimeUnit.SECONDS.toMillis(seconds);
-//
-//		StringBuilder sb = new StringBuilder(64);
-//
-//		if (days > 0) {
-//			sb.append(days);
-//			sb.append(" days");
-//		}
-//
-//		if (hours > 0 || (days > 0 && (minutes > 0 || seconds > 0))) {
-//			sb.append(" " + hours);
-//			sb.append(" h");
-//		}
-//
-//		if (minutes > 0 || ((days > 0 || hours > 0) && seconds > 0)) {
-//			sb.append(" " + minutes);
-//			sb.append(" mins");
-//		}
-//
-//		if (seconds > 0) {
-//			sb.append(" " + seconds);			
-//			if (millis > 0) {
-//				sb.append(".");
-//				sb.append(millis);
-//			}
-//			sb.append(" secs");
-//		} else if (millis > 0) {
-//			sb.append(millis);
-//			sb.append(" ms");
-//		}
-//
-//		return (sb.toString().trim());
+		if (millis == 0) {
+			return "0 ms";
+		}
+//		return DurationFormatUtils.formatDurationHMS(millis);
+		long days = TimeUnit.MILLISECONDS.toDays(millis);
+		millis -= TimeUnit.DAYS.toMillis(days);
+
+		long hours = TimeUnit.MILLISECONDS.toHours(millis);
+		millis -= TimeUnit.HOURS.toMillis(hours);
+
+		long minutes = TimeUnit.MILLISECONDS.toMinutes(millis);
+		millis -= TimeUnit.MINUTES.toMillis(minutes);
+
+		long seconds = TimeUnit.MILLISECONDS.toSeconds(millis);
+		millis -= TimeUnit.SECONDS.toMillis(seconds);
+
+		StringBuilder sb = new StringBuilder(64);
+
+		if (days > 0) {
+			sb.append(days);
+			sb.append(" days");
+		}
+
+		if (hours > 0 || (days > 0 && (minutes > 0 || seconds > 0))) {
+			sb.append(" " + hours);
+			sb.append(" h");
+		}
+
+		if (minutes > 0 || ((days > 0 || hours > 0) && seconds > 0)) {
+			sb.append(" " + minutes);
+			sb.append(" mins");
+		}
+
+		if (seconds > 0) {
+			sb.append(" " + seconds);			
+			if (millis > 0) {
+				sb.append(".");
+				sb.append(millis);
+			}
+			sb.append(" secs");
+		} else if (millis > 0) {
+			sb.append(millis);
+			sb.append(" ms");
+		}
+
+		return (sb.toString().trim());
 	}
 
 	public static Timespan createTimespan(long duration, TimeUnit unit) {

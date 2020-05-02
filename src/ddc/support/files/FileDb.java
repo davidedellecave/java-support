@@ -31,6 +31,8 @@ public class FileDb {
 		Query q2 = em.createQuery("SELECT AVG(p.bytes) FROM FileRecord p");
 		System.out.println("Average X: " + q2.getSingleResult());
 		//
+		Query q3 = em.createQuery("SELECT * FROM FileRecord p");
+		System.out.println("Select *: " + q3.getResultList());
 		// TypedQuery<FileRecord> query = em.createQuery("SELECT p FROM FileRecord p",
 		// FileRecord.class);
 		// List<FileRecord> results = query.getResultList();

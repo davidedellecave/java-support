@@ -14,23 +14,22 @@ import java.util.List;
 
 public class TextFile {
 	private Path path = null;
-	private String charset ="UTF-8";
+	private String charset = "UTF-8";
 	private String text = "";
 
 	public static void create(Path path, String text) throws UnsupportedEncodingException, IOException {
 		Files.write(path, text.getBytes(), CREATE);
 	}
-	
+
 	public static void create(String path, String text) throws UnsupportedEncodingException, IOException {
 		Files.write(Paths.get(path), text.getBytes(), CREATE);
 	}
-	
+
 	public static String load(@SuppressWarnings("rawtypes") Class clazz, String resourceName) throws URISyntaxException, UnsupportedEncodingException, IOException {
 		Path path = Paths.get(clazz.getResource(resourceName).toURI());
 		return load(path);
 	}
-	
-	
+
 	/**
 	 * Append text to file, if file does not exist will be created
 	 */
@@ -38,14 +37,22 @@ public class TextFile {
 		if (!Files.exists(path)) {
 			Files.write(path, text.getBytes(), CREATE);
 		} else {
-			Files.write(path, text.getBytes(), APPEND);	
+			Files.write(path, text.getBytes(), APPEND);
 		}
 	}
-	
-	public static void append(String path, String text) throws UnsupportedEncodingException, IOException {
-		append(Paths.get(path), text); 
+
+	public static void append(Path path, List<String> text) throws UnsupportedEncodingException, IOException {
+		String data = "";
+		for (String s : text) {
+			data += s + "\n";
+		}
+		append(path, data);
 	}
-	
+
+	public static void append(String path, String text) throws UnsupportedEncodingException, IOException {
+		append(Paths.get(path), text);
+	}
+
 	public static void write(Path path, Iterable<? extends CharSequence> lines) throws IOException {
 		Files.write(path, lines, StandardCharsets.UTF_8);
 	}
@@ -57,59 +64,60 @@ public class TextFile {
 	public static String load(Path path) throws UnsupportedEncodingException, IOException {
 		return new String(Files.readAllBytes(path), StandardCharsets.UTF_8);
 	}
-	
+
 	public static List<String> loadLines(Path path) throws UnsupportedEncodingException, IOException {
 		return Files.readAllLines(path, StandardCharsets.UTF_8);
 	}
-	
+
 	public static TextFile newLoadInstance(Path path) throws UnsupportedEncodingException, IOException {
 		TextFile tf = new TextFile(path);
 		tf.load();
 		return tf;
 	}
-	
+
 	public static TextFile newCreateInstance(Path path, String text) throws UnsupportedEncodingException, IOException {
 		TextFile tf = new TextFile(path);
 		tf.setText(text);
 		tf.create();
 		return tf;
 	}
-	
+
 	public static TextFile newAppendInstance(Path path, String text) throws UnsupportedEncodingException, IOException {
 		TextFile tf = new TextFile(path);
 		tf.setText(text);
 		tf.append();
 		return tf;
 	}
-	
+
 	public TextFile(Path path) {
-		this.path=path;
+		this.path = path;
 	}
-	
+
 	public TextFile(String path) {
-		this.path=Paths.get(path);
+		this.path = Paths.get(path);
 	}
-	
+
 	public TextFile(Path path, String charset) {
-		this.path=path;
-		this.charset=charset;
+		this.path = path;
+		this.charset = charset;
 	}
-	
+
 	public void load() throws UnsupportedEncodingException, IOException {
 		text = new String(Files.readAllBytes(path), charset);
 	}
-	
+
 	public void create() throws UnsupportedEncodingException, IOException {
 		create(path, text);
 	}
+
 	public void append() throws UnsupportedEncodingException, IOException {
 		append(path, text);
 	}
-	
+
 	public String getFilename() {
 		return path.getFileName().toString();
 	}
-	
+
 	public Path getPath() {
 		return path;
 	}

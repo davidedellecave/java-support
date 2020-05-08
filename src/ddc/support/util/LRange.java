@@ -1,5 +1,6 @@
 package ddc.support.util;
 
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,7 +14,13 @@ public class LRange {
         this.upper = ubound;
         normalizeBound();
     }
-
+    
+    public LRange(ZonedDateTime lbound, ZonedDateTime ubound) {
+        this.lower = lbound.toInstant().toEpochMilli();
+        this.upper = ubound.toInstant().toEpochMilli();
+        normalizeBound();
+    }
+    
     public static LRange create(long lbound, long ubound) {
         return new LRange(lbound, ubound);
     }

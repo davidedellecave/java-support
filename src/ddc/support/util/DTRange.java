@@ -6,6 +6,7 @@ import java.time.LocalTime;
 import java.time.Month;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class DTRange {
 //	public static final DTRange EMPTY = new DTRange(ZonedDateTime. LocalDate.of(1900, 1, 1), LocalDate.of(1900, 1, 1));
@@ -74,6 +75,6 @@ public class DTRange {
 
 	@Override
 	public String toString() {
-		return " (" + begin + "," + end + ")";
+		return " (" + begin.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))  + ", " + end.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")) + ")";
 	}
 }

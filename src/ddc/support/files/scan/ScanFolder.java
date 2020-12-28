@@ -18,20 +18,20 @@ import java.util.Map;
 
 import ddc.support.util.Chronometer;
 import ddc.support.util.FileUtil;
-import ddc.support.util.LogListener;
 
 public class ScanFolder {
 	private boolean stop = false;
 	private ScanFolderContext context = null;
-	private LogListener logListener = null;
 	private ScanFolderConfig config = new ScanFolderConfig();
 
 	public ScanFolder() {
 	}
 
-	public ScanFolder(LogListener logger) {
-		this.logListener = logger;
+	
+	public void setConfig(ScanFolderConfig config) {
+		this.config = config;
 	}
+
 
 	public ScanFolderConfig getConfig() {
 		return config;
@@ -55,7 +55,8 @@ public class ScanFolder {
 		deepFirstScan(config, scanHandler);
 	}
 
-	public void deepFirstScan(Path rootFolder, boolean recursive, ScanFolderHandler scanHandler, boolean zipEnabled) throws Exception {
+	public void deepFirstScan(Path rootFolder, boolean recursive, ScanFolderHandler scanHandler, boolean zipEnabled)
+			throws Exception {
 		ScanFolderConfig c = new ScanFolderConfig();
 		c.setRootFolder(rootFolder);
 		c.setRecursive(recursive);
@@ -70,7 +71,8 @@ public class ScanFolder {
 		context.setConfig(config);
 		context.setStats(new ScanFolderStats());
 		proxyStartScan(context, scanHandler);
-		doDeepFirstTraversing(config.getRootFolder(), context, scanHandler, ScanResult.continueScan, config.isZipEnabled());
+		doDeepFirstTraversing(config.getRootFolder(), context, scanHandler, ScanResult.continueScan,
+				config.isZipEnabled());
 		proxyEndScan(context, scanHandler);
 	}
 
@@ -81,7 +83,8 @@ public class ScanFolder {
 		context.setConfig(config);
 		context.setStats(new ScanFolderStats());
 		proxyStartScan(context, scanHandler);
-		doDeepFirstTraversing(config.getRootFolder(), context, scanHandler, ScanResult.continueScan, config.isZipEnabled());
+		doDeepFirstTraversing(config.getRootFolder(), context, scanHandler, ScanResult.continueScan,
+				config.isZipEnabled());
 		proxyEndScan(context, scanHandler);
 	}
 
@@ -92,34 +95,40 @@ public class ScanFolder {
 
 	private static final String INFO_TITLE = "ScanFile - ";
 
-	public static List<Path> fileList(Path folder) {
+
+	public List<Path> fileList(Path folder) throws IOException {
 		List<Path> fileNames = new ArrayList<>();
 		try (DirectoryStream<Path> directoryStream = Files.newDirectoryStream(folder)) {
 			for (Path path : directoryStream) {
 				fileNames.add(path);
 			}
-		} catch (IOException ex) {
+		} catch (Exception e) {
+			if (config.getLogListener()!=null) {
+				config.getLogListener().error(e);
+			}
+			throw e;
 		}
 		return fileNames;
 	}
 
-	private void doDeepFirstTraversing(Path folder, ScanFolderContext ctx, ScanFolderHandler scanHandler, ScanResult currentScanMode, boolean zipEnabled) throws Exception {
+	private void doDeepFirstTraversing(Path folder, ScanFolderContext ctx, ScanFolderHandler scanHandler,
+			ScanResult currentScanMode, boolean zipEnabled) throws Exception {
 		if (currentScanMode == ScanResult.stopScan)
 			return;
 
 		if (!Files.isDirectory(folder)) {
-			if (logListener != null)
-				logListener.error(INFO_TITLE + "path is not a folder:[" + folder + "]");
+			if (config.getLogListener() != null)
+				config.getLogListener().error(INFO_TITLE + "path is not a folder:[" + folder + "]");
 			return;
 		}
-		if (!Files.isReadable(folder)) {
-			if (logListener != null)
-				logListener.error(INFO_TITLE + "cannot read folder:[" + folder + "]");
-			return;
-		}
+//		if (!Files.isReadable(folder)) {
+//			if (logListener != null)
+//				logListener.error(INFO_TITLE + "cannot read folder:[" + folder + "]");
+//			return;
+//		}
 		if (isStopped()) {
-			if (logListener != null)
-				logListener.info(INFO_TITLE + "stop requested - folder:[" + folder + "]");
+			if (config.getLogListener() != null)
+				config.getLogListener().info(INFO_TITLE + "stop requested - folder:[" + folder + "]");
 			return;
 		}
 		// get files and subfolder of folder
@@ -195,7 +204,8 @@ public class ScanFolder {
 		return new DecimalFormat("#,##0.#").format(size / Math.pow(1024, digitGroups)) + " " + units[digitGroups];
 	}
 
-	private ScanResult proxyPreFolder(Path folder, ScanFolderContext ctx, ScanFolderHandler scanHandler) throws Exception {
+	private ScanResult proxyPreFolder(Path folder, ScanFolderContext ctx, ScanFolderHandler scanHandler)
+			throws Exception {
 		ScanFolderConfig conf = ctx.getConfig();
 		ScanFolderStats stats = ctx.getStats();
 		try {
@@ -213,7 +223,8 @@ public class ScanFolder {
 		}
 	}
 
-	private ScanResult proxyPostFolder(Path folder, ScanFolderContext ctx, ScanFolderHandler scanHandler) throws Exception {
+	private ScanResult proxyPostFolder(Path folder, ScanFolderContext ctx, ScanFolderHandler scanHandler)
+			throws Exception {
 		ScanFolderConfig conf = ctx.getConfig();
 		ScanFolderStats stats = ctx.getStats();
 		try {
@@ -261,7 +272,8 @@ public class ScanFolder {
 		return FileSystems.newFileSystem(uri, env);
 	}
 
-	private ScanResult handleZip(Path file, ScanFolderContext ctx, ScanFolderHandler scanHandler, ScanResult currentScanMode) throws IOException {
+	private ScanResult handleZip(Path file, ScanFolderContext ctx, ScanFolderHandler scanHandler,
+			ScanResult currentScanMode) throws IOException {
 		// create the file system
 		try (FileSystem zipFileSystem = createZipFileSystem(file, false)) {
 

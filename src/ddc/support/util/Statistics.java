@@ -42,10 +42,10 @@ public class Statistics {
 		info += itemsSource != null ? " itemsSource:[" + itemsSource + "]": "";
 		info += itemsTarget != null ? " itemsTarget:[" + itemsTarget + "]": "";		
 		info += " itemsProcessed:[" + itemsProcessed + "]";
-		info += itemsSucceeded != 0 ? " itemsSucceeded:[" + itemsSucceeded + "]" : "";
-		info += itemsAffected != 0 ? " itemsAffected:[" + itemsAffected + "]" : "";
-		info += itemsFailed != 0 ? " itemsFailed:[" + itemsFailed + "]" : "";
-		info += bytesProcessed != 0 ? " bytesProcessed:[" + bytesProcessed + " (" + getProcessedHumanReadable() + ")]" : "";
+		info += itemsSucceeded >= 0 ? " itemsSucceeded:[" + itemsSucceeded + "]" : "";
+		info += itemsAffected >= 0 ? " itemsAffected:[" + itemsAffected + "]" : "";
+		info += itemsFailed >= 0 ? " itemsFailed:[" + itemsFailed + "]" : "";
+		info += bytesProcessed >= 0 ? " bytesProcessed:[" + getProcessedHumanReadable() + ")]" : "";
 		info += chron != null ? " elapsed:[" + chron.toString() + "]": "";
 		info += getBytesOverSecs()!="" ? " sizeRatio:[" + getBytesOverSecs() + "]": "";
 		info += getItemsOverSecs()!="" ? " itemRatio:[" + getItemsOverSecs() + "]": "";

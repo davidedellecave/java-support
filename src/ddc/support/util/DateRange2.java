@@ -2,6 +2,7 @@ package ddc.support.util;
 
 import java.time.LocalDate;
 import java.time.Month;
+import java.time.format.DateTimeFormatter;
 
 public class DateRange2 {
 	public static final DateRange2 EMPTY = new DateRange2(LocalDate.of(1900, 1, 1), LocalDate.of(1900, 1, 1));
@@ -38,6 +39,31 @@ public class DateRange2 {
 		begin = LocalDate.of(startYear, startMonth, startDay);
 		end = LocalDate.of(endYear, endMonth, endDay);
 
+	}
+
+	public long beginToMillis() {		
+		return DateUtil.toMillis(begin);
+	}
+	public long endToMillis() {		
+		return DateUtil.toMillis(end);
+	}
+	
+	public String getBegin() {		
+		return begin.format(DateTimeFormatter.ISO_LOCAL_DATE);
+	}
+
+	public DateRange2 setBegin(String isoLocalDateTime) {
+		begin = LocalDate.parse(isoLocalDateTime, DateTimeFormatter.ISO_LOCAL_DATE);
+		return this;
+	}
+
+	public String getEnd() {
+		return end.format(DateTimeFormatter.ISO_LOCAL_DATE);
+	}
+
+	public DateRange2 setEnd(String isoLocalDateTime) {
+		end = LocalDate.parse(isoLocalDateTime, DateTimeFormatter.ISO_LOCAL_DATE);
+		return this;
 	}
 
 	public boolean isEmpty() {

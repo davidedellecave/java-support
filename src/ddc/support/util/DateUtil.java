@@ -233,7 +233,10 @@ public class DateUtil {
 //		return date.toInstant();
 //	}
 //	
-
+	
+	public static ZonedDateTime toSystemDefault(long millis) {
+		return ZonedDateTime.ofInstant(Instant.ofEpochMilli(millis), ZoneId.systemDefault());
+	}
 
 	public static ZonedDateTime toUTC(Instant instant) {
 		return ZonedDateTime.ofInstant(instant, ZONE_UTC);
@@ -295,4 +298,6 @@ public class DateUtil {
 	public static long diffToMillis(Instant t1, Instant t2) {
 		return Duration.between(t1, t2).toMillis();
 	}
+
+
 }

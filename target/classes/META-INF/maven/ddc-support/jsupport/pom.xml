@@ -10,7 +10,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<jackson-core-ver>2.10.3</jackson-core-ver>
 		<jackson-jaxrs-version>2.9.6</jackson-jaxrs-version>
-		<log4j2.version>2.11.0</log4j2.version>
+		<log4j2.version>2.13.3</log4j2.version>
 		<jupiter.version>5.1.1</jupiter.version>
 		<http-client>4.5.12</http-client>
 		<commons-lang>3.8</commons-lang>
@@ -19,7 +19,9 @@
 		<commons-io>2.5</commons-io>
 		<commons-compress>1.9</commons-compress>
 		<commons-text>1.5</commons-text>
+		<commons-csv>1.8</commons-csv>
 	</properties>
+
 
 	<repositories>
 		<repository>
@@ -69,7 +71,7 @@
 		<dependency>
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-csv</artifactId>
-			<version>1.6</version>
+			<version>${commons-csv}</version>
 			<scope>provided</scope>
 		</dependency>
 
@@ -79,14 +81,6 @@
 			<version>${commons-lang}</version>
 			<scope>provided</scope>
 		</dependency>
-
-		<dependency>
-			<groupId>org.apache.commons</groupId>
-			<artifactId>commons-text</artifactId>
-			<version>${commons-text}</version>
-			<scope>provided</scope>
-		</dependency>
-
 
 		<!-- https://mvnrepository.com/artifact/commons-io/commons-io -->
 		<dependency>

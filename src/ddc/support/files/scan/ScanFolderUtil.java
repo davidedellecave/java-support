@@ -37,9 +37,13 @@ public class ScanFolderUtil {
 		return result;
 	}
 
-	public static List<Path> getFiles(Path folder, boolean recursive, final String[] includeExtension, final String[] excludeExtension) throws Exception {
-		return getFiles(folder, recursive, -1, includeExtension, excludeExtension);
+	public static List<Path> getFiles(Path folder, ScanFolderConfig config, final String[] includeExtension, final String[] excludeExtension) throws Exception {
+		return getFiles(folder, config, -1, includeExtension, excludeExtension);
 	}
+	
+//	public static List<Path> getFiles(Path folder, boolean recursive, final String[] includeExtension, final String[] excludeExtension) throws Exception {
+//		return getFiles(folder, recursive, -1, includeExtension, excludeExtension);
+//	}
 
 	public static List<Path> getFilesStartWith(Path folder, boolean recursive, String startName) throws Exception {
 		final List<Path> list = new ArrayList<>();
@@ -58,15 +62,17 @@ public class ScanFolderUtil {
 		});
 		return list;
 	}
-
-	public static List<Path> getFiles(Path folder, boolean recursive, long olderThanMillis, final String[] includeExtension, final String[] excludeExtension) throws Exception {
+	
+	public static List<Path> getFiles(Path folder, ScanFolderConfig config, long olderThanMillis, final String[] includeExtension, final String[] excludeExtension) throws Exception {
 		if (!folder.toFile().isDirectory()) {
 			return Collections.emptyList();
 		}
 
 		ScanFolder s = new ScanFolder();
+		s.setConfig(config);
+		
 		final List<Path> list = new ArrayList<>();
-		s.deepFirstScan(folder, recursive, new BaseScanFolderHandler() {
+		s.deepFirstScan(folder, config.isRecursive(), new BaseScanFolderHandler() {
 			@Override
 			public ScanResult handleFile(Path file, ScanFolderContext ctx) throws IOException {
 				boolean toAdd = false;
@@ -102,6 +108,50 @@ public class ScanFolderUtil {
 		});
 		return list;
 	}
+
+//	public static List<Path> getFiles(Path folder, boolean recursive, long olderThanMillis, final String[] includeExtension, final String[] excludeExtension) throws Exception {
+//		if (!folder.toFile().isDirectory()) {
+//			return Collections.emptyList();
+//		}
+//
+//		ScanFolder s = new ScanFolder();
+//		final List<Path> list = new ArrayList<>();
+//		s.deepFirstScan(folder, recursive, new BaseScanFolderHandler() {
+//			@Override
+//			public ScanResult handleFile(Path file, ScanFolderContext ctx) throws IOException {
+//				boolean toAdd = false;
+//
+//				if (olderThanMillis > 0 && FileUtil.isNewerThan(file, olderThanMillis)) {
+//					return ScanResult.continueScan;
+//				}
+//
+//				if (includeExtension.length > 0) {
+//					for (String ext : includeExtension) {
+//						if (file.getFileName().toString().endsWith(ext)) {
+//							toAdd = true;
+//							break;
+//						}
+//					}
+//				} else {
+//					toAdd = true;
+//				}
+//
+//				if (excludeExtension.length > 0) {
+//					for (String ext : excludeExtension) {
+//						if (file.getFileName().toString().endsWith(ext)) {
+//							toAdd = false;
+//							break;
+//						}
+//					}
+//				}
+//
+//				if (toAdd)
+//					list.add(file);
+//				return ScanResult.continueScan;
+//			}
+//		});
+//		return list;
+//	}
 
 	public static void handleFiles(Path folder, ScanFolderHandlerFile handler) throws Exception {
 		ScanFolder s = new ScanFolder();

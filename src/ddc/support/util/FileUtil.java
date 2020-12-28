@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FilePermission;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -19,6 +20,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.attribute.FileTime;
+import java.security.AccessController;
 import java.security.CodeSource;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -150,13 +152,18 @@ public class FileUtil {
 	}
 
 	public static boolean isReadbleFolder(File folder) {
-		if (folder == null)
-			return false;
-		if (!folder.isDirectory())
-			return false;
-		if (!folder.exists() || !folder.canRead())
-			return false;
+		
+		FilePermission fp = new FilePermission(folder.toString(), "read");
+		AccessController.checkPermission(fp);
 		return true;
+		
+//		if (folder == null)
+//			return false;
+//		if (!folder.isDirectory())
+//			return false;
+//		if (!folder.exists() || !folder.canRead())
+//			return false;
+//		return true;
 	}
 
 	public static boolean createWritebleFolder(String folder) {

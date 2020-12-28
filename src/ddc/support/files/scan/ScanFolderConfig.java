@@ -2,37 +2,41 @@ package ddc.support.files.scan;
 
 import java.nio.file.Path;
 
+import ddc.support.util.LogListener;
+
 public class ScanFolderConfig {
 	private Path rootFolder = null;
 	private boolean isRecursive = true;
 	private long sleepMillis = 10;
-//	private IOFileFilter dirFilter = TrueFileFilter.TRUE;
-//	private IOFileFilter fileFilter = TrueFileFilter.TRUE;
 	private boolean continueToHandleFileOnError = false;
 	private boolean zipEnabled = false;
-
+	private LogListener logListener = null;
+	
 	public Path getRootFolder() {
 		return rootFolder;
 	}
 
-	public void setRootFolder(Path rootFolder) {
+	public ScanFolderConfig setRootFolder(Path rootFolder) {
 		this.rootFolder = rootFolder;
+		return this;
 	}
 
 	public boolean isRecursive() {
 		return isRecursive;
 	}
 
-	public void setRecursive(boolean isRecursive) {
+	public ScanFolderConfig setRecursive(boolean isRecursive) {
 		this.isRecursive = isRecursive;
+		return this;
 	}
 
 	public long getSleepMillis() {
 		return sleepMillis;
 	}
 
-	public void setSleepMillis(long sleepMillis) {
+	public ScanFolderConfig setSleepMillis(long sleepMillis) {
 		this.sleepMillis = sleepMillis;
+		return this;
 	}
 
 
@@ -40,14 +44,26 @@ public class ScanFolderConfig {
 		return continueToHandleFileOnError;
 	}
 
-	public void setContinueToHandleFileOnError(boolean continueToHandleFileOnError) {
+	public ScanFolderConfig setContinueToHandleFileOnError(boolean continueToHandleFileOnError) {
 		this.continueToHandleFileOnError = continueToHandleFileOnError;
+		return this;
 	}
 
 	public boolean isZipEnabled() {
 		return zipEnabled;
 	}
-	public void setZipEnabled(boolean zipEnabled) {
+	public ScanFolderConfig setZipEnabled(boolean zipEnabled) {
 		this.zipEnabled = zipEnabled;
+		return this;
 	}
+
+	public LogListener getLogListener() {
+		return logListener;
+	}
+
+	public ScanFolderConfig setLogListener(LogListener logListener) {
+		this.logListener = logListener;
+		return this;
+	}
+	
 }

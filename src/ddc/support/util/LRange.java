@@ -6,7 +6,6 @@ import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 
 public class LRange {
@@ -14,6 +13,9 @@ public class LRange {
 	private long upper = 0;
 	private long threshold = 1;
 	public static final LRange EMPTY = new LRange(0, 0);
+
+	public LRange() {
+	}
 
 	public LRange(long lbound, long ubound) {
 		this.lower = lbound;
@@ -478,7 +480,6 @@ public class LRange {
 			upper = t;
 		}
 	}
-
 
 	@Override
 	public String toString() {

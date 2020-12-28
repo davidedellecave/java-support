@@ -4,6 +4,7 @@ import java.time.Duration;
 import java.util.HashMap;
 import java.util.Map;
 
+@Deprecated
 public class LiteCache {
 	private static Map<String, CacheItem> cache = new HashMap<>();
 

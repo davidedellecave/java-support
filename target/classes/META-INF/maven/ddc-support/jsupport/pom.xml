@@ -16,7 +16,7 @@
 		<commons-lang>3.8</commons-lang>
 		<commons-collection>4.4</commons-collection>
 		<commons-codec>1.14</commons-codec>
-		<commons-io>2.5</commons-io>
+		<commons-io>2.7</commons-io>
 		<commons-compress>1.9</commons-compress>
 		<commons-text>1.5</commons-text>
 		<commons-csv>1.8</commons-csv>

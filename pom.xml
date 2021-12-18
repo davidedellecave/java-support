@@ -10,7 +10,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<jackson-core-ver>2.10.3</jackson-core-ver>
 		<jackson-jaxrs-version>2.9.6</jackson-jaxrs-version>
-		<log4j2.version>2.13.3</log4j2.version>
+		<log4j2.version>2.17.0</log4j2.version>
 		<jupiter.version>5.1.1</jupiter.version>
 		<http-client>4.5.12</http-client>
 		<commons-lang>3.8</commons-lang>

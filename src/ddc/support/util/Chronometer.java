@@ -194,6 +194,18 @@ public class Chronometer {
 		return call;
 	}
 	
+	public static long getElapsed(long start, long end) {
+		if (start <=0)
+			return 0;
+		if (end <=0)
+			return 0;
+		return end - start;
+	}
+	
+	public static String getElapsedString(long start, long end) {
+		return getHumanReadable(getElapsed(start, end));
+	}
+	
 	public static String getHumanReadable(long millis) {
 		if (millis < 0) {
 			return String.valueOf(millis);

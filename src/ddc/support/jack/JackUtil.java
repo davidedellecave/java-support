@@ -7,6 +7,7 @@ import java.util.Map;
 
 import com.fasterxml.jackson.core.JsonGenerationException;
 import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -34,7 +35,7 @@ public class JackUtil {
 	// .withCreatorVisibility(JsonAutoDetect.Visibility.NONE));
 	// }
 
-	public static String toPrettifiedString(Object obj) throws JsonGenerationException, JsonMappingException, IOException {
+	public static String toPrettifiedString(Object obj) throws JsonProcessingException  {
 		return (mapper.writerWithDefaultPrettyPrinter()).writeValueAsString(obj);
 	}
 

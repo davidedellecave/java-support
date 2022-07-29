@@ -22,6 +22,10 @@ public class EzCache<T> {
 		return null;
 	}
 
+	public synchronized int size() {
+		return cache.size();
+	}
+	
 	public synchronized T get(String name, Renewal<T> renewal) throws Exception {
 		T obj = get(name);
 		if (obj == null) {
@@ -55,7 +59,9 @@ public class EzCache<T> {
 		return get(name)!=null;
 	}
 
-	//remove all evicted item
+	/**
+	 * Remove all evicted item 
+	 */	
 	public synchronized void purge() {
 		Set<String> names = new  HashSet<>(cache.keySet());
 		names.forEach(x -> get(x));
@@ -76,3 +82,4 @@ public class EzCache<T> {
 	}
 
 }
+

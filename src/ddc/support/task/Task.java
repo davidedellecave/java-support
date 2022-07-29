@@ -48,7 +48,7 @@ public abstract class Task implements Runnable {
 		return context.make(clazz);
 	}
 
-	public void setContext(TaskContext context) {
+	public void setTaskContext(TaskContext context) {
 		this.context = context;
 	}
 	

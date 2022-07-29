@@ -13,7 +13,7 @@ public class TaskInstance {
 		TaskInstance i = new TaskInstance();
 		i.clazz=clazz; 		
 		i.instance = clazz.newInstance();
-		i.instance.setContext(context);
+		i.instance.setTaskContext(context);
 		return i;
 	}
 

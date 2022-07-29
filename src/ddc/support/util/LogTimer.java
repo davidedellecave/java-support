@@ -1,17 +1,17 @@
 package ddc.support.util;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
 public class LogTimer {
-	private Logger logger = null;
+	private LogListener logger = null;
 	private Chronometer chron = new Chronometer();
 	private long counter = 0;
 
 	public LogTimer(Class<?> clazz) {
-		logger = LogManager.getLogger(clazz);
+		logger = new LogConsole();
 	}
 
+	public void setLogger(LogListener log) {
+		this.logger=log;
+	}
 	public void start(String message) {
 		chron.start();
 		counter = 0;

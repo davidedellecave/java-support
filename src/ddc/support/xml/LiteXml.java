@@ -34,7 +34,7 @@ import org.w3c.dom.NodeList;
 public class LiteXml implements LiteXmlDocument {
 	private Document doc = null;
 
-	 public LiteXml( Document doc) {
+	 public LiteXml(Document doc) {
 		 this.doc=doc;
 	 }
 
@@ -50,6 +50,13 @@ public class LiteXml implements LiteXmlDocument {
 		doc.appendChild(e);
 		return e;
 	}
+	
+	@Override
+	public Element createElement(String name) {
+		Element e = doc.createElement(name);
+		return e;
+	}
+
 
 	@Override
 	public Element getRoot() {
@@ -203,13 +210,14 @@ public class LiteXml implements LiteXmlDocument {
 
 	@Override
 	public String getXmlString(String charsetName) throws LiteXmlException {
-		try {
-			ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-			serialize(doc, bytes);
-			return bytes.toString(charsetName);
-		} catch (UnsupportedEncodingException e) {
-			throw new LiteXmlException(e);
-		}
+		return LiteXmlUtil.getXmlString(doc, charsetName);
+//		try {
+//			ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+//			serialize(doc, bytes);
+//			return bytes.toString(charsetName);
+//		} catch (UnsupportedEncodingException e) {
+//			throw new LiteXmlException(e);
+//		}
 	}
 
 	public void write(ByteArrayOutputStream bytes) throws LiteXmlException {

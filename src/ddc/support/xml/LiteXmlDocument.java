@@ -22,6 +22,7 @@ public interface LiteXmlDocument {
 	public Document getDocument();
 	public Element addRoot(String name);
 	public Element getRoot();
+	public Element createElement(String name);
 	public Element addChild(Element element, String name);
 	public Element addChild(Element element, String name, String value);
 	public Element addChild(Element element, String name, long value);

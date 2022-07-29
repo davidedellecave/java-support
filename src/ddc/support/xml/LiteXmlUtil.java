@@ -1,14 +1,22 @@
 package ddc.support.xml;
 
 import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.io.OutputStream;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
 import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpression;
 import javax.xml.xpath.XPathExpressionException;
@@ -32,6 +40,18 @@ public class LiteXmlUtil {
 		}
 	}
 
+	public static Document createDoc() throws LiteXmlException {
+		try {
+			DocumentBuilderFactory f = DocumentBuilderFactory.newInstance();
+			f.setNamespaceAware(true); // never forget this!
+			DocumentBuilder b = f.newDocumentBuilder();
+//			LiteXmlDocument doc = new LiteXml(b.newDocument());
+			return b.newDocument();
+		} catch (ParserConfigurationException e) {
+			throw new LiteXmlException("createDocument: " + e.getMessage());
+		}
+	}
+	
 	public static LiteXmlDocument createDocument(File file) throws LiteXmlException {
 		try {
 			DocumentBuilderFactory f = DocumentBuilderFactory.newInstance();
@@ -170,5 +190,26 @@ public class LiteXmlUtil {
 			}
 		}
 		return a;
+	}
+	
+	public static String getXmlString(Document doc, String charsetName) throws LiteXmlException {
+		try {
+			ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+			serialize(doc, bytes);
+			return bytes.toString(charsetName);
+		} catch (UnsupportedEncodingException e) {
+			throw new LiteXmlException(e);
+		}
+	}
+	
+	private static void serialize(Document doc, OutputStream out) throws LiteXmlException {
+		try {
+			TransformerFactory f = TransformerFactory.newInstance();
+			Transformer serializer;
+			serializer = f.newTransformer();
+			serializer.transform(new DOMSource(doc), new StreamResult(out));
+		} catch (TransformerException e) {
+			throw new LiteXmlException("serialize", e);
+		}
 	}
 }

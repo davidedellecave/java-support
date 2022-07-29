@@ -9,7 +9,7 @@ import ddc.support.util.Statistics;
 /**
  * @author davidedc 2013
  */
-public class TaskInfo {
+public class TaskInfo {	
 	private String name = null;
 	private UUID uuid = UUID.randomUUID();
 	private UUID parentUuid = null;

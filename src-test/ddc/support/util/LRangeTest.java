@@ -1,13 +1,12 @@
 package ddc.support.util;
 
-import static org.junit.Assert.fail;
-
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.LinkedList;
 import java.util.List;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+
 
 public class LRangeTest {
 

@@ -4,7 +4,8 @@ import java.text.ParseException;
 import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+
 
 public class DateUtilTest {
 

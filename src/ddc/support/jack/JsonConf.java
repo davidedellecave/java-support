@@ -39,6 +39,7 @@ public class JsonConf {
 		}
 	}
 	
+	
 	public static <T> T loadConfiguration(Path path, Class<T> clazz) throws IOException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException {
 		return loadConfiguration(path, clazz, clazz.getDeclaredConstructor().newInstance());
 	}

@@ -2,7 +2,8 @@ package ddc.support.jdbc.schema;
 
 import java.sql.SQLException;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+
 
 public class LiteDbTest {
 

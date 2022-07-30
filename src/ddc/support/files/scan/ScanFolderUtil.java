@@ -164,12 +164,21 @@ public class ScanFolderUtil {
 	}
 
 	public static List<Path> getFiles(Path folder) throws Exception {
+		return getFiles(folder, false);
+	}
+	
+	public static List<Path> getFiles(Path folder, boolean recurse) throws Exception {
+		
 		if (!folder.toFile().isDirectory()) {
 			return Collections.emptyList();
+		}		
+		final List<Path> list = new ArrayList<>();
+		if (folder.toFile().isFile()) {
+			list.add(folder);
+			return list;
 		}
 		ScanFolder s = new ScanFolder();
-		final List<Path> list = new ArrayList<>();
-		s.deepFirstScan(folder, true, new BaseScanFolderHandler() {
+		s.deepFirstScan(folder, recurse, new BaseScanFolderHandler() {
 			@Override
 			public ScanResult handleFile(Path file, ScanFolderContext ctx) {
 				list.add(file);

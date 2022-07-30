@@ -235,12 +235,13 @@ public class FileUtil {
 	 * @return
 	 */
 	public static File getUniqueFileName(File file) {
+		File renamed = file;
 		int counter = 0;
-		while (file.exists()) {
+		while (renamed.exists()) {
 			counter++;
-			file = renameFileAddSuffix(file, "-" + String.valueOf(counter));
+			renamed = renameFileAddSuffix(file, "-" + String.valueOf(counter));
 		}
-		return file;
+		return renamed;
 	}
 
 	public static String getFileExtension(String name) {

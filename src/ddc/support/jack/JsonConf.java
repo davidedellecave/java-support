@@ -1,6 +1,7 @@
 package ddc.support.jack;
 
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
@@ -8,23 +9,41 @@ import ddc.support.util.TextFile;
 
 public class JsonConf {
 	
-	public static Object loadConfiguration(Path path, Object conf) throws IOException {
+//	public static Object loadConfiguration(Path path, Object conf) throws IOException {
+//		try {
+//			if (Files.exists(path)) {
+//				String data = TextFile.load(path);
+//				Object context = JackUtil.parse(data, conf.getClass());
+//				return context;
+//			} else {
+//				storeConfiguration(path, conf);
+//				return conf;
+//			}
+//		} catch (Exception e) {
+//			throw new IOException(e);
+//		}
+//	}
+	
+	public static <T> T loadConfiguration(Path path, Class<T> clazz, T defaultConf) throws IOException {
 		try {
 			if (Files.exists(path)) {
 				String data = TextFile.load(path);
-				Object context = JackUtil.parse(data, conf.getClass());
+				T context = JackUtil.parse(data, clazz);
 				return context;
 			} else {
-				storeConfiguration(path, conf);
-				return null;
+				storeConfiguration(path, defaultConf);
+				return defaultConf;
 			}
 		} catch (Exception e) {
 			throw new IOException(e);
 		}
 	}
 	
+	public static <T> T loadConfiguration(Path path, Class<T> clazz) throws IOException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException {
+		return loadConfiguration(path, clazz, clazz.getDeclaredConstructor().newInstance());
+	}
 	
-	public static void storeConfiguration(Path path, Object conf) throws IOException {
+	public static <T> void storeConfiguration(Path path, T conf) throws IOException {
 		try {
 			String data = JackUtil.toPrettifiedString(conf);
 			TextFile.create(path, data);
@@ -32,4 +51,6 @@ public class JsonConf {
 			throw new IOException(e);
 		}
 	}
+
+
 }

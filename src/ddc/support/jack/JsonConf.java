@@ -9,21 +9,6 @@ import ddc.support.util.TextFile;
 
 public class JsonConf {
 	
-//	public static Object loadConfiguration(Path path, Object conf) throws IOException {
-//		try {
-//			if (Files.exists(path)) {
-//				String data = TextFile.load(path);
-//				Object context = JackUtil.parse(data, conf.getClass());
-//				return context;
-//			} else {
-//				storeConfiguration(path, conf);
-//				return conf;
-//			}
-//		} catch (Exception e) {
-//			throw new IOException(e);
-//		}
-//	}
-	
 	public static <T> T loadConfiguration(Path path, Class<T> clazz, T defaultConf) throws IOException {
 		try {
 			if (Files.exists(path)) {

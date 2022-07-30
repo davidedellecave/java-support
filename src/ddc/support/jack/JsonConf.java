@@ -8,7 +8,7 @@ import java.nio.file.Path;
 import ddc.support.util.TextFile;
 
 public class JsonConf {
-	
+
 	public static <T> T loadConfiguration(Path path, Class<T> clazz, T defaultConf) throws IOException {
 		try {
 			if (Files.exists(path)) {
@@ -23,12 +23,13 @@ public class JsonConf {
 			throw new IOException(e);
 		}
 	}
-	
-	
-	public static <T> T loadConfiguration(Path path, Class<T> clazz) throws IOException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException {
+
+	public static <T> T loadConfiguration(Path path, Class<T> clazz)
+			throws IOException, InstantiationException, IllegalAccessException, IllegalArgumentException,
+			InvocationTargetException, NoSuchMethodException, SecurityException {
 		return loadConfiguration(path, clazz, clazz.getDeclaredConstructor().newInstance());
 	}
-	
+
 	public static <T> void storeConfiguration(Path path, T conf) throws IOException {
 		try {
 			String data = JackUtil.toPrettifiedString(conf);
@@ -37,6 +38,5 @@ public class JsonConf {
 			throw new IOException(e);
 		}
 	}
-
 
 }

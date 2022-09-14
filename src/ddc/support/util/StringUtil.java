@@ -125,4 +125,34 @@ public class StringUtil {
 		}
 		return returnVal;
 	}
+	
+	//Match string using wildcards ? (any 1 char) and * (any chars)
+	public static boolean wildcardsMatches(String text, String glob) {
+	    String rest = null;
+	    int pos = glob.indexOf('*');
+	    if (pos != -1) {
+	        rest = glob.substring(pos + 1);
+	        glob = glob.substring(0, pos);
+	    }
+
+	    if (glob.length() > text.length())
+	        return false;
+
+	    // handle the part up to the first *
+	    for (int i = 0; i < glob.length(); i++)
+	        if (glob.charAt(i) != '?' 
+	                && !glob.substring(i, i + 1).equalsIgnoreCase(text.substring(i, i + 1)))
+	            return false;
+
+	    // recurse for the part after the first *, if any
+	    if (rest == null) {
+	        return glob.length() == text.length();
+	    } else {
+	        for (int i = glob.length(); i <= text.length(); i++) {
+	            if (wildcardsMatches(text.substring(i), rest))
+	                return true;
+	        }
+	        return false;
+	    }
+	}
 }

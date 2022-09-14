@@ -10,7 +10,7 @@
 		<jackson-jaxrs-version>2.11.4</jackson-jaxrs-version>
 		<log4j2.version>2.18.0</log4j2.version>
 		<jupiter.version>5.8.1</jupiter.version>
-		<http-client>4.5.12</http-client>
+		<http-client>4.5.13</http-client>
 		<commons-lang>3.8</commons-lang>
 		<commons-collection>4.4</commons-collection>
 		<commons-codec>1.14</commons-codec>

@@ -1,6 +1,11 @@
 package ddc.support.jdbc;
 
+import java.io.IOException;
+
+import ddc.support.jack.JackUtil;
+
 public class JdbcConfig {
+	private String driver=null;
 	private String host = "";
 	private int port = 0;
 	private String database = "";
@@ -47,9 +52,23 @@ public class JdbcConfig {
 		this.password = password;
 	}
 
+	public String getDriver() {
+		return driver;
+	}
+
+	public void setDriver(String driver) {
+		this.driver = driver;
+	}
+
 	@Override
 	public String toString() {
-		return user + "@" + host + ":" + port + "/" + database;
+		try {
+			return JackUtil.toString(this);
+		} catch (IOException e) {
+			e.printStackTrace();
+			return e.getMessage();
+		}
+//		return user + "@" + host + ":" + port + "/" + database;
 	}
 
 }

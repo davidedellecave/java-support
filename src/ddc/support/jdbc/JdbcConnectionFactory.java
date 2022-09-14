@@ -64,8 +64,12 @@ public abstract class JdbcConnectionFactory {
 		return getSqlLimit("(" + subquery + ") T", "*", limit);
 	}
 
-	public Connection createConnection() throws SQLException, ClassNotFoundException {
-		loadDriver();
+	public Connection createConnection() throws SQLException {
+		try {
+			loadDriver();
+		} catch (ClassNotFoundException e) {
+			throw new SQLException(e);
+		}
 		Connection c = DriverManager.getConnection(getUrl(), conf.getUser(), conf.getPassword());
 		return c;
 	}

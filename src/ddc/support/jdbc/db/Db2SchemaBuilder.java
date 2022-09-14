@@ -44,12 +44,12 @@ public class Db2SchemaBuilder implements LiteDbSchemaBuilder {
 		return sql;
 	}
 
-	private void doBuild2(Connection connection, String schema, String table) throws Exception {
+	private void doBuild2(Connection connection, String schema, String table) throws SQLException {
 		// SELECT * FROM SYSIBM.SYSTABLES WHERE DBNAME='LIFEUNIV';
 		String sql = buildSql2(schema, table);
 		SqlUtils.select(connection, sql, new SqlRowHandler() {
 			@Override
-			public void handle(long counter, ResultSet rs) throws Exception {
+			public void handle(long counter, ResultSet rs) throws SQLException {
 				String catalogName = rs.getString("TBCREATOR");
 				String schemaName = rs.getString("TBCREATOR");
 				String tableName = rs.getString("TBNAME");

@@ -1,6 +1,4 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>ddc-support</groupId>
 	<artifactId>jsupport</artifactId>
@@ -11,7 +9,7 @@
 		<jackson-core-ver>2.11.4</jackson-core-ver>
 		<jackson-jaxrs-version>2.11.4</jackson-jaxrs-version>
 		<log4j2.version>2.18.0</log4j2.version>
-		<jupiter.version>5.1.1</jupiter.version>
+		<jupiter.version>5.8.1</jupiter.version>
 		<http-client>4.5.12</http-client>
 		<commons-lang>3.8</commons-lang>
 		<commons-collection>4.4</commons-collection>
@@ -35,14 +33,6 @@
 	</repositories>
 
 	<dependencies>
-		<!-- https://mvnrepository.com/artifact/junit/junit -->
-		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<version>3.8.1</version>
-			<scope>test</scope>
-		</dependency>
-
 		<dependency>
 			<groupId>org.junit.jupiter</groupId>
 			<artifactId>junit-jupiter-api</artifactId>
@@ -200,11 +190,11 @@
 		</dependency>
 
 		<!-- https://mvnrepository.com/artifact/org.postgresql/postgresql -->
+		<!-- https://mvnrepository.com/artifact/org.postgresql/postgresql -->
 		<dependency>
 			<groupId>org.postgresql</groupId>
 			<artifactId>postgresql</artifactId>
-			<version>42.1.4</version>
-			<scope>provided</scope>
+			<version>42.4.1</version>
 		</dependency>
 
 		<dependency>

@@ -18,9 +18,11 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.fasterxml.jackson.databind.node.TextNode;
 import com.fasterxml.jackson.databind.node.ValueNode;
 import com.fasterxml.jackson.databind.type.TypeFactory;
+import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 
 public class JackUtil {
 	private static ObjectMapper mapper = new ObjectMapper();
+	private static XmlMapper xmlMapper = new XmlMapper();
 	// {
 	// mapper.setVisibility(mapper.getSerializationConfig()
 	//
@@ -35,6 +37,17 @@ public class JackUtil {
 	// .withCreatorVisibility(JsonAutoDetect.Visibility.NONE));
 	// }
 
+
+	public static <T> T parseXml(String xml, Class<T> valueType) throws JsonMappingException, JsonProcessingException {
+		return xmlMapper.readValue(xml, valueType);
+	}
+	public static String toXmlString(Object obj) throws JsonProcessingException  {
+		return xmlMapper.writeValueAsString(obj);
+	}
+	public static String toPrettifiedXmlString(Object obj) throws JsonProcessingException  {
+		return (xmlMapper.writerWithDefaultPrettyPrinter()).writeValueAsString(obj);
+	}
+	
 	public static String toPrettifiedString(Object obj) throws JsonProcessingException  {
 		return (mapper.writerWithDefaultPrettyPrinter()).writeValueAsString(obj);
 	}

@@ -34,7 +34,7 @@ public class Statistics {
 	public String getProcessedHumanReadable() {
 		return FileUtils.byteCountToDisplaySize(bytesProcessed);
 	}
-	
+
 	@Override
 	public String toString() {
 		String info = "";

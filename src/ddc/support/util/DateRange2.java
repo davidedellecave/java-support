@@ -32,7 +32,9 @@ public class DateRange2 {
 	}
 	
 	private LocalDate endDate(LocalDate date) {
-		return LocalDate.of(date.getYear(), date.getMonth(), date.getMonth().maxLength());
+		//return date.withDayOfMonth(date.lengthOfMonth());
+		//return LocalDate.of(date.getYear(), date.getMonth(), date.getMonth().maxLength());
+		return LocalDate.of(date.getYear(), date.getMonth(), date.lengthOfMonth());
 	}
 	
 	public DateRange2(int startYear, Month startMonth, int startDay, int endYear, Month endMonth, int endDay) {

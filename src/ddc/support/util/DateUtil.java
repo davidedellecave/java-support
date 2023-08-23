@@ -40,6 +40,18 @@ public class DateUtil {
 	// "YYYY-'W'ww-u" 2001-W27-3
 	// ---------------- Parse
 
+	
+	
+
+	public static LocalDate parseToLocalDate(String formattedDate, String pattern) throws ParseException {
+		return LocalDate.parse(formattedDate, DateTimeFormatter.ofPattern(pattern));
+	}
+
+	public static LocalDateTime parseToLocalDateTime(String formattedDateTime, String pattern) throws ParseException {
+		return LocalDateTime.parse(formattedDateTime, DateTimeFormatter.ofPattern(pattern));
+	}
+
+	
 	public static Instant parseToInstant(String formattedDate, String pattern) throws ParseException {
 		return parseToDate(formattedDate, pattern).toInstant();
 	}

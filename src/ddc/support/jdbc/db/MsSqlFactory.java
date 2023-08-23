@@ -12,10 +12,16 @@ public class MsSqlFactory extends JdbcConnectionFactory {
 
 	@Override
 	public String getUrl() {
-//		jdbc:sqlserver://[serverName[\instanceName][:portNumber]][;property=value[;property=value]]
-		return "jdbc:sqlserver://" + getHost() + ":" + getPort() + ";databaseName=" + getDatabase();
+		String url ="jdbc:sqlserver://" + getHost() + ":" + getPort() +  ";databaseName=" + getDatabase();
+		url += ";encrypt=true;trustServerCertificate=true";
+		url += ";integratedSecurity=false";
+//		url += ";CryptoProtocolVersion=TLSv1.2";
+//		TLS, TLSv1, TLSv1.1, and TLSv1.2
+		return url;
 	}
 
+//	jdbc:sqlserver://5.134.124.246:1433;databaseName=davidedc_gottardo;;encrypt=true;trustServerCertificate=true;
+//	jdbc:sqlserver://5.134.124.246:1433;databaseName=davidedc_gottardo;encrypt=true;trustServerCertificate=true;integratedSecurity=false		
 	@Override
 	public String getDriver() {
 		return "com.microsoft.sqlserver.jdbc.SQLServerDriver";

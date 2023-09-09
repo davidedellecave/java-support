@@ -7,9 +7,7 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URISyntaxException;
 import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+import java.nio.file.*;
 import java.util.List;
 
 public class TextFile {
@@ -42,11 +40,12 @@ public class TextFile {
 	}
 
 	public static void append(Path path, List<String> text) throws UnsupportedEncodingException, IOException {
-		String data = "";
-		for (String s : text) {
-			data += s + "\n";
-		}
-		append(path, data);
+//		String data = "";
+//		for (String s : text) {
+//			data += s + "\n";
+//		}
+//		append(path, data);
+		Files.write(path, text, StandardCharsets.UTF_8, APPEND);
 	}
 
 	public static void append(String path, String text) throws UnsupportedEncodingException, IOException {
@@ -54,7 +53,7 @@ public class TextFile {
 	}
 
 	public static void write(Path path, Iterable<? extends CharSequence> lines) throws IOException {
-		Files.write(path, lines, StandardCharsets.UTF_8);
+		Files.write(path, lines, StandardCharsets.UTF_8, CREATE);
 	}
 
 	public static String load(String path) throws UnsupportedEncodingException, IOException {

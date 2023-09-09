@@ -39,10 +39,7 @@ public class DateUtil {
 	// "yyyy-MM-dd'T'HH:mm:ss.SSSXXX" 2001-07-04T12:08:56.235-07:00
 	// "YYYY-'W'ww-u" 2001-W27-3
 	// ---------------- Parse
-
 	
-	
-
 	public static LocalDate parseToLocalDate(String formattedDate, String pattern) throws ParseException {
 		return LocalDate.parse(formattedDate, DateTimeFormatter.ofPattern(pattern));
 	}
@@ -278,9 +275,21 @@ public class DateUtil {
 		ZonedDateTime zdt = ldt.atZone(ZoneId.systemDefault());
 		return zdt.toInstant().toEpochMilli();
 	}
-	
+
+	public static long toMillis(ZonedDateTime zdt) {
+		return zdt.toInstant().toEpochMilli();
+	}
+
 	public static Instant toInstant(LocalDateTime ldt) {
 		return ldt.atZone(ZoneId.systemDefault()).toInstant();
+	}
+
+	public static LocalDateTime toLocalDateTime(Instant instant) {
+		return LocalDateTime.ofInstant(instant, ZoneId.systemDefault());
+	}
+
+	public static LocalDateTime toLocalDateTime(long millis) {
+		return toLocalDateTime(Instant.ofEpochMilli(millis));
 	}
 
 	public static Instant toInstant(LocalDate date) {

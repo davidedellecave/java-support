@@ -5,12 +5,11 @@
 	<version>1.0.0</version>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<jackson-core-ver>2.11.4</jackson-core-ver>
-		<jackson-jaxrs-version>2.11.4</jackson-jaxrs-version>
-		<log4j2.version>2.18.0</log4j2.version>
+		<jackson-core-ver>2.15.1</jackson-core-ver>
+		<jackson-jaxrs-version>2.15.1</jackson-jaxrs-version>
 		<jupiter.version>5.8.1</jupiter.version>
 		<http-client>4.5.12</http-client>
-		<commons-lang>3.8</commons-lang>
+		<commons-lang>3.12.0</commons-lang>
 		<commons-collection>4.4</commons-collection>
 		<commons-codec>1.14</commons-codec>
 		<commons-io>2.5</commons-io>
@@ -18,16 +17,25 @@
 		<commons-text>1.5</commons-text>
 		<commons-csv>1.8</commons-csv>
 		<commons-email>1.4</commons-email>
+		<commons-math>2.2</commons-math>
+		<elastic-client>8.9.2</elastic-client>
+		<slf4j-ver>2.0.9</slf4j-ver>
+		<log4j2-version>2.20.0</log4j2-version>
+		<!-- -->
+		<junit-ver>5.10.0</junit-ver>
 		<maven-ver>3.8.1</maven-ver>
+		<!-- -->
 		<java-ver>18</java-ver>
+		<maven.compiler.source>18</maven.compiler.source>
+		<maven.compiler.target>18</maven.compiler.target>
 	</properties>
-	<repositories>
+	<!-- repositories>
 		<repository>
 			<id>objectdb</id>
 			<name>ObjectDB Repository</name>
-			<url>http://m2.objectdb.com</url>
+			<url>https://m2.objectdb.com</url>
 		</repository>
-	</repositories>
+	</repositories -->
 	<dependencies>
 		<dependency>
 			<groupId>org.junit.jupiter</groupId>
@@ -39,19 +47,19 @@
 		<dependency>
 			<groupId>org.apache.logging.log4j</groupId>
 			<artifactId>log4j-slf4j-impl</artifactId>
-			<version>${log4j2.version}</version>
+			<version>${log4j2-version}</version>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.logging.log4j</groupId>
 			<artifactId>log4j-api</artifactId>
-			<version>${log4j2.version}</version>
+			<version>${log4j2-version}</version>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.logging.log4j</groupId>
 			<artifactId>log4j-core</artifactId>
-			<version>${log4j2.version}</version>
+			<version>${log4j2-version}</version>
 			<scope>provided</scope>
 		</dependency>
 		<!-- Apache Commons -->
@@ -135,20 +143,27 @@
 			<version>${http-client}</version>
 			<scope>provided</scope>
 		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.apache.commons/commons-text -->
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-text</artifactId>
+			<version>${commons-text}</version>
+			<scope>provided</scope>
+		</dependency>
 		<!-- ======================== -->
 		<!-- Jackson core -->
 		<!-- ======================== -->
-		<!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind -->
-		<dependency>
-			<groupId>com.fasterxml.jackson.core</groupId>
-			<artifactId>jackson-databind</artifactId>
-			<version>${jackson-core-ver}</version>
-			<scope>provided</scope>
-		</dependency>
 		<!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-core -->
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-core</artifactId>
+			<version>${jackson-core-ver}</version>
+			<scope>provided</scope>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind -->
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
 			<version>${jackson-core-ver}</version>
 			<scope>provided</scope>
 		</dependency>
@@ -178,6 +193,7 @@
 			<groupId>org.postgresql</groupId>
 			<artifactId>postgresql</artifactId>
 			<version>42.4.1</version>
+			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>com.microsoft.sqlserver</groupId>

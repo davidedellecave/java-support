@@ -40,12 +40,7 @@ public class TextFile {
 	}
 
 	public static void append(Path path, List<String> text) throws UnsupportedEncodingException, IOException {
-//		String data = "";
-//		for (String s : text) {
-//			data += s + "\n";
-//		}
-//		append(path, data);
-		Files.write(path, text, StandardCharsets.UTF_8, APPEND);
+		Files.write(path, text, StandardCharsets.UTF_8, CREATE, APPEND);
 	}
 
 	public static void append(String path, String text) throws UnsupportedEncodingException, IOException {

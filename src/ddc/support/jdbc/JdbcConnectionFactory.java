@@ -1,14 +1,10 @@
 package ddc.support.jdbc;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
-import java.sql.Statement;
-
 import ddc.support.jdbc.db.SqlTypeMap;
 import ddc.support.jdbc.schema.LiteDbSchemaBuilder;
 import ddc.support.util.Chronometer;
+
+import java.sql.*;
 
 public abstract class JdbcConnectionFactory {
 	private final static int DEFAULT_CONNECTION_RETRY = 1;

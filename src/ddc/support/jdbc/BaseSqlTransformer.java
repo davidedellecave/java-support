@@ -12,7 +12,6 @@ import javax.sql.DataSource;
 import ddc.support.util.Field;
 import ddc.support.util.Fields;
 import ddc.support.util.LogConsole;
-import ddc.support.util.LogListener;
 
 public abstract class BaseSqlTransformer {
 	// cached value
@@ -27,9 +26,9 @@ public abstract class BaseSqlTransformer {
 	private boolean isExecuteBatchEnabled = true;
 	private int itemForBatchExecution = 20000;
 	private boolean stopOnException = true;
-	private LogListener logger = new LogConsole(BaseSqlTransformer.class);
+	private LogConsole logger = new LogConsole(BaseSqlTransformer.class);
 
-	public void setLogListener(LogListener listener) {
+	public void setLogListener(LogConsole listener) {
 		this.logger = listener;
 	}
 

@@ -16,10 +16,10 @@ public class MySqlFactoryTest {
 	@Test
 	public void testGetSqlLimitTemplate() throws Exception {
 //		JdbcConfig conf = new JdbcConfig();
-//		conf.setDatabase("dataquality");
-//		conf.setHost("192.168.76.224");
-//		conf.setUser("root");
-//		conf.setPassword("Davidedc3");
+//		conf.setDatabase("");
+//		conf.setHost("");
+//		conf.setUser("");
+//		conf.setPassword("");
 //		MySqlFactory f = new MySqlFactory(conf);
 //		Connection conn = f.createConnection();
 //	

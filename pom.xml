@@ -7,7 +7,7 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <jackson-core-ver>2.15.1</jackson-core-ver>
-        <jackson-jaxrs-version>2.15.1</jackson-jaxrs-version>
+        <jackson-jaxrs-version>2.17.2</jackson-jaxrs-version>
         <jupiter.version>5.8.1</jupiter.version>
         <http-client>4.5.12</http-client>
         <commons-lang>3.12.0</commons-lang>
@@ -24,9 +24,10 @@
         <log4j2-version>2.20.0</log4j2-version>
         <!-- -->
         <junit-ver>5.10.0</junit-ver>
-        <maven-ver>3.8.1</maven-ver>
+
         <!-- -->
-        <java-ver>18</java-ver>
+        <java.version>18</java.version>
+        <maven-ver>3.8.1</maven-ver>
         <maven.compiler.source>18</maven.compiler.source>
         <maven.compiler.target>18</maven.compiler.target>
     </properties>
@@ -183,6 +184,11 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
+            <groupId>com.fasterxml.jackson.datatype</groupId>
+            <artifactId>jackson-datatype-jsr310</artifactId>
+            <version>${jackson-core-ver}</version>
+        </dependency>
+        <dependency>
             <groupId>com.fasterxml.jackson.dataformat</groupId>
             <artifactId>jackson-dataformat-xml</artifactId>
             <version>${jackson-core-ver}</version>
@@ -237,8 +243,8 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>${maven-ver}</version>
                 <configuration>
-                    <source>${java-ver}</source>
-                    <target>${java-ver}</target>
+                    <source>${java.version}</source>
+                    <target>${java.version}</target>
                 </configuration>
             </plugin>
         </plugins>

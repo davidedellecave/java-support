@@ -1,19 +1,19 @@
 package ddc.support.task;
 
 public abstract class Task implements Runnable {
-	private TaskContext context = null;	
+	private TaskContext context = new TaskContext();
 	
 	
 	@Override
 	public void run() {
 		try {
-			doRun();
+			doRetryRun();
 		} catch (Throwable e) {
 			throw new TaskException(e);
 		}
 	}
 	
-	public abstract void doRun() throws Throwable;
+	public abstract void doRetryRun() throws Throwable;
 	
 	/**
 	 * Shortcut for getContext().get(Class<?> clazz);

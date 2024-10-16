@@ -12,7 +12,7 @@ public class XmlConf {
 		try {
 			if (Files.exists(path)) {
 				String data = TextFile.load(path);
-				return JackUtil.parseXml(data, clazz);
+				return _JackUtil.parseXml(data, clazz);
 			} else {
 				storeConfiguration(path, defaultConf);
 				return defaultConf;
@@ -30,7 +30,7 @@ public class XmlConf {
 
 	public static <T> void storeConfiguration(Path path, T conf) throws IOException {
 		try {
-			String data = JackUtil.toPrettifiedXmlString(conf);
+			String data = _JackUtil.toPrettifiedXmlString(conf);
 			TextFile.create(path, data);
 		} catch (Exception e) {
 			throw new IOException(e);

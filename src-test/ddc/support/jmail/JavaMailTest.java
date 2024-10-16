@@ -8,19 +8,19 @@ import java.io.UnsupportedEncodingException;
 
 class JavaMailTest {
 
-    @Test
-    public void Test_SendMail_1() throws MessagingException, UnsupportedEncodingException {
+    public void Test_SendMail_1() throws  UnsupportedEncodingException, MessagingException {
+
         JavaMailConf c = new JavaMailConf();
-        c.setSmtpHost("smtp100.ext.armada.it");
+        c.setSmtpHost("*");
         c.setPort(JavaMailConf.PORT_SSL);
         //
-        c.setUsername("SMTP-BASIC-9476");
-        c.setPassword("m877UsKn8s");
+        c.setUsername("*");
+        c.setPassword("*");
         c.setSslEnabled(true);
         //
-        c.setFrom("info@medisportgottardo.it");
+        c.setFrom("*");
         //
-        c.setReceipient("davide.dellecave@gmail.com");
+        c.setReceipient("*");
         c.setSubject("Test 1");
         c.setBody("Ciao davide");
         //

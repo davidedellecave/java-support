@@ -18,6 +18,7 @@ public class Replacer {
             //System.out.println("key:" + e.getKey() + " - " + "value:" + e.getValue());
             source = StringUtils.replace(source, e.getKey(), e.getValue());
         }
+        map.clear();
         return source;
     }
 }

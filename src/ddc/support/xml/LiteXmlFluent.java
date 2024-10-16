@@ -1,81 +1,105 @@
 package ddc.support.xml;
 
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
+import org.w3c.dom.*;
 import org.w3c.dom.Node;
 
 public class LiteXmlFluent {
-	private Document doc = null;
-	private Element e = null;
+    private LiteXml xml = null;
+    private Node lastNode = null;
+    private Node root = null;
+    private Attr lastAttr = null;
 
-	public LiteXmlFluent(String root) throws LiteXmlException {
-		this.doc = LiteXmlUtil.createDoc();
-		e = doc.createElement(root);
-		doc.appendChild(e);
-	}
+    public LiteXmlFluent(String rootName) throws LiteXmlException {
+        var doc = LiteXmlUtil.createDoc();
+        xml = new LiteXml(doc);
+        root = xml.addRoot(rootName);
+        lastNode = root;
+    }
 
-	public LiteXmlFluent(Document doc, Element e) {
-		this.doc = doc;
-		this.e = e;
-	}
-	
-	public Element getElement() {
-		return e;
-	}
-	
-	public Document getDocument() {
-		return doc;
-	}
-	
-	public LiteXmlFluent getParent() {
-		Node n = this.getElement().getParentNode();		
-		if (n instanceof Element) {
-			System.err.println("getParent - parent element not found");
-			return new LiteXmlFluent(doc, (Element)n);		
-		} else {
-			return this;
-		}	
-	}
-
-	public LiteXmlFluent addChild(String name) {
-		Element elem = doc.createElement(name);
-		e.appendChild(elem);
-		return new LiteXmlFluent(doc, elem);
-	}
-	
-	public LiteXmlFluent addChild(String name, String content) {
-		Element elem = doc.createElement(name);
-		elem.setTextContent(content);
-		e.appendChild(elem);
-		return new LiteXmlFluent(doc, elem);
-	}
-
-	public LiteXmlFluent addSibling(String name) {
-		Element elem = doc.createElement(name);
-		e.getParentNode().appendChild(elem);
-		return new LiteXmlFluent(doc, elem);
-	}
-
-	public LiteXmlFluent addSibling(String name, String content) {
-		Element elem = doc.createElement(name);
-		elem.setTextContent(content);
-		e.getParentNode().appendChild(elem);
-		return new LiteXmlFluent(doc, elem);
-	}
+    public Document getDocument() {
+        return xml.getDocument();
+    }
 
 
-	
-	public String toXmlString(String charsetName) throws LiteXmlException {
-		return LiteXmlUtil.getXmlString(this.getDocument(), charsetName);
-	}
-	
+    public Node detach() {
+        return (Node) xml.getDocument().removeChild(root);
+    }
 
-	public static void main(String[] args) throws InterruptedException, LiteXmlException {
-		LiteXmlFluent f = new LiteXmlFluent("html");
-		LiteXmlFluent table = f.addChild("h1", "content").addSibling("table");
-		table.addChild("tr").addChild("th", "header1").addSibling("th", "header2");
-		table.addChild("tr").addChild("td", "data1").addSibling("td", "data2");
-		String html = f.toXmlString("UTF-8");
-		System.out.println(html);
-	}
+    public LiteXmlFluent addChild(String name) throws LiteXmlException {
+        lastNode = xml.addChild(lastNode, name);
+        return this;
+    }
+
+    public LiteXmlFluent addChild(String name, String text) throws LiteXmlException {
+        lastNode = xml.addChild(lastNode, name, text);
+        return this;
+    }
+
+    public LiteXmlFluent addChild(Node Node) {
+        lastNode.appendChild(Node);
+        lastNode = Node;
+        return this;
+    }
+
+    public LiteXmlFluent addAttribute(String name, String value) {
+        lastAttr = xml.addAttribute((Element) lastNode, name, value);
+        return this;
+    }
+
+    public LiteXmlFluent addSibling(Node Node) {
+        lastNode.getParentNode().appendChild(Node);
+        lastNode = Node;
+        return this;
+    }
+
+    public LiteXmlFluent addSibling(String name) {
+        Node elem = xml.getDocument().createElement(name);
+        return  addSibling(elem);
+    }
+
+    public LiteXmlFluent addSibling(String name, String content) {
+        addSibling(name).getLastNode().setTextContent(content);
+        return this;
+    }
+
+    public LiteXmlFluent importAsChild(LiteXmlFluent importXml) {
+        return importAsChild(importXml.getRoot());
+    }
+
+    public LiteXmlFluent importAsSibling(LiteXmlFluent importXml) {
+        return importAsSibling(importXml.getRoot());
+    }
+
+
+    public LiteXmlFluent importAsChild(Node node) {
+        Node newNode = xml.getDocument().importNode(node, true);
+        return addChild((Node) newNode);
+    }
+
+    public LiteXmlFluent importAsSibling(Node node) {
+        Node newNode = xml.getDocument().importNode(node, true);
+        return addSibling((Node) newNode);
+    }
+
+    public Node getLastNode() {
+        return lastNode;
+    }
+
+    public Node getRoot() {
+        return root;
+    }
+
+    public LiteXml getXml() {
+        return xml;
+    }
+
+
+    public void setLastNode(Node newLastNode) {
+        lastNode = newLastNode;
+    }
+
+    public LiteXmlFluent setLastNodeAsParent() {
+        lastNode = (Node) lastNode.getParentNode();
+        return this;
+    }
 }

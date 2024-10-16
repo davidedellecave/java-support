@@ -15,7 +15,7 @@ class JackUtilTest {
 
 //	@Test
 	void testToMap() {
-		Map<String, Object> m = JackUtil.toMap(new test());
+		Map<String, Object> m = _JackUtil.toMap(new test());
 		System.out.println(m);
 		String line = CsvUtil.getLine(m, ';');
 		System.out.println(line);
@@ -45,7 +45,7 @@ class JackUtilTest {
 		log.put("error.message", "test");
 		log.put("error.stack_trace", "java.lang.RuntimeException: test\n org.apache.logging.log4j.JsonTemplateLayoutDemo.main(JsonTemplateLayoutDemo.java:11)");
 		
-		System.out.println(JackUtil.toPrettifiedString(log));
+		System.out.println(_JackUtil.toPrettifiedString(log));
 		
 		//INIZIALIZZAZIONE BONIFICO
 		log = new LinkedHashMap<String, String>();
@@ -61,7 +61,7 @@ class JackUtilTest {
 		log.put("param.NomeBeneficiario", "SCACIA ANNA CASELLA");
 		log.put("param.NomeOrdinante", "JANDOLI VINCENZO");
 		
-		System.out.println(JackUtil.toPrettifiedString(log));		
+		System.out.println(_JackUtil.toPrettifiedString(log));
 		
 		log = new LinkedHashMap<String, String>();
 		setCommon(log, "AUTORIZZAZIONE");
@@ -70,7 +70,7 @@ class JackUtilTest {
 		log.put("Operazione.desc", "Scenario di sicurezza da applicare");		
 		log.put("param.TipoScenarioDispositiva", "SCAD");
 		log.put("param.TipoDispositivoDiSicurezza", "OTP HW");
-		System.out.println(JackUtil.toPrettifiedString(log));		
+		System.out.println(_JackUtil.toPrettifiedString(log));
 		
 		log = new LinkedHashMap<String, String>();
 		setCommon(log, "FINALIZZAZIONE BONIFICO");
@@ -80,7 +80,7 @@ class JackUtilTest {
 		log.put("param.SmashProduct", "BONIFICO_ISTANTANEO");
 		log.put("param.Successful", "true");
 		log.put("param.Disp.Id", "21650296-ed09-461a-aaa1-ce64fd9b7166");
-		System.out.println(JackUtil.toPrettifiedString(log));		
+		System.out.println(_JackUtil.toPrettifiedString(log));
 		
 	}
 	

@@ -8,6 +8,9 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @author davidedc, 04/nov/2010
+ */
 public class LRange {
 	private long lower = 0;
 	private long upper = 0;

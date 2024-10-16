@@ -32,11 +32,11 @@ public class VerticaDbFactory extends JdbcConnectionFactory {
 
 	public static void main(String[] args) {
 		JdbcConfig c = new JdbcConfig();
-		c.setHost("vertica-infohub.mondadori.it");
+		c.setHost("");
 		c.setPort(5433);
-		c.setDatabase("infohub");
-		c.setUser("dbadmin");
-		c.setPassword("yFj#wJ85");
+		c.setDatabase("");
+		c.setUser("");
+		c.setPassword("");
 		VerticaDbFactory f = new VerticaDbFactory(c);
 		System.out.println(f.getUrl());
 

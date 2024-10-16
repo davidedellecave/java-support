@@ -13,7 +13,7 @@ public class LiteDbTest {
 //		conf.setHost("localhost");
 //		conf.setDatabase("davide");
 //		conf.setUser("davide");
-//		conf.setPassword("davidedc");	
+//		conf.setPassword("davide");
 //		
 ////		conf.setPort(1414);
 //		PostgreSqlFactory f = new PostgreSqlFactory(conf);

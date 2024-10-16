@@ -1,6 +1,6 @@
 package ddc.support.util;
 
-public class EzCacheException extends Exception {
+public class EzCacheException extends RuntimeException {
 	private static final long serialVersionUID = 3077763687878554877L;
 
 	public EzCacheException(String message) {

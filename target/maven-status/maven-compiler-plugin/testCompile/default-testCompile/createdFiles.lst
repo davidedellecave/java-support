@@ -11,4 +11,5 @@ ddc/support/jdbc/schema/LiteDbTest.class
 ddc/support/util/ChronometerTest.class
 ddc/support/jack/JackUtilTest.class
 ddc/support/jack/JackUtilTest$test.class
+ddc/support/jmail/JavaMailTest.class
 ddc/support/jdbc/db/MsSqlFactoryTest.class

@@ -5,7 +5,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import com.fasterxml.jackson.core.JsonGenerationException;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
@@ -20,7 +19,8 @@ import com.fasterxml.jackson.databind.node.ValueNode;
 import com.fasterxml.jackson.databind.type.TypeFactory;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 
-public class JackUtil {
+@Deprecated
+public class _JackUtil {
 	private static ObjectMapper mapper = new ObjectMapper();
 	private static XmlMapper xmlMapper = new XmlMapper();
 	// {
@@ -52,7 +52,7 @@ public class JackUtil {
 		return (mapper.writerWithDefaultPrettyPrinter()).writeValueAsString(obj);
 	}
 
-	public static String toString(Object obj) throws JsonGenerationException, JsonMappingException, IOException {
+	public static String toString(Object obj) throws  IOException {
 		return mapper.writeValueAsString(obj);
 	}
 

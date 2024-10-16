@@ -16,7 +16,7 @@ public class DateUtil {
     public static String DATE_PATTERN_YMD = "yyyy-MM-dd";
     public static String DATE_PATTERN_YM = "yyyy-MM";
     public static ZoneId ZONE_ROME = ZoneId.of("Europe/Rome");
-    public static ZoneId ZONE_UTC = ZoneOffset.UTC;
+    public static ZoneId ZONE_UTC = ZoneId.of("UTC");
     public static ZoneId ZONE_DEFAULT = ZoneId.systemDefault();
     private static DateTimeFormatter FORMATTER_ISO_DATETIME_LOCAL = DateTimeFormatter.ISO_LOCAL_DATE_TIME;
     private static DateTimeFormatter FORMATTER_ISO_DATETIME = DateTimeFormatter.ISO_DATE_TIME;
@@ -163,10 +163,10 @@ public class DateUtil {
         return FORMATTER_ISO_DATETIME.format(zdt);
     }
 
-	public static String formatISOLocal(long millis) {
-		ZonedDateTime zdt = toSystemDefault(millis);
-		return FORMATTER_ISO_DATETIME_LOCAL.format(zdt);
-	}
+    public static String formatISOLocal(long millis) {
+        ZonedDateTime zdt = toSystemDefault(millis);
+        return FORMATTER_ISO_DATETIME_LOCAL.format(zdt);
+    }
 
     public static String formatISO(ZonedDateTime zdt) {
         return FORMATTER_ISO_DATETIME.format(zdt);
@@ -296,8 +296,16 @@ public class DateUtil {
         return LocalDateTime.ofInstant(instant, ZoneId.systemDefault());
     }
 
+    public static LocalDate toLocalDate(Instant instant) {
+        return LocalDate.ofInstant(instant, ZoneId.systemDefault());
+    }
+
     public static LocalDateTime toLocalDateTime(long millis) {
         return toLocalDateTime(Instant.ofEpochMilli(millis));
+    }
+
+    public static LocalDate toLocalDate(long millis) {
+        return toLocalDate(Instant.ofEpochMilli(millis));
     }
 
     public static Instant toInstant(LocalDate date) {

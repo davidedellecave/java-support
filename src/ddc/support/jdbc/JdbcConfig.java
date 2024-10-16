@@ -2,7 +2,7 @@ package ddc.support.jdbc;
 
 import java.io.IOException;
 
-import ddc.support.jack.JackUtil;
+import ddc.support.jack._JackUtil;
 
 public class JdbcConfig {
 	private String driver=null;
@@ -63,7 +63,7 @@ public class JdbcConfig {
 	@Override
 	public String toString() {
 		try {
-			return JackUtil.toString(this);
+			return _JackUtil.toString(this);
 		} catch (IOException e) {
 			e.printStackTrace();
 			return e.getMessage();
